@@ -1130,6 +1130,23 @@ func (pn *PackageName) String() string {
 	return pn.Namespace + ":" + pn.Name + "@" + pn.Version.String()
 }
 
+// ID represents a WIT identifier. It is a combination of:
+//   - A [PackageName], with optional version information
+//   - An optional interface name
+//   - An optional name
+//
+// The canonical string representation of an ID is "$package[/$interface[.$name]]". Examples:
+//   - For a [Package]: "wasi:clocks"
+//   - For a [Package] with a specific version: "wasi:clocks@1.0.0"
+//   - For an [Interface]: "wasi:clocks/wall-clock"
+//   - For a [Type]: "wasi:clocks/wall-clock.datetime"
+//   - For a [Function]: "wasi:clocks/wall-clock.now"
+type ID struct {
+	Package   PackageName
+	Interface string
+	Name      string
+}
+
 // Docs represent WIT documentation text extracted from comments.
 type Docs struct {
 	Contents string // may be empty
