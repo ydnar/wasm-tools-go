@@ -7,7 +7,7 @@ import (
 
 	"github.com/urfave/cli/v3"
 	"github.com/ydnar/wasm-tools-go/cmd/wit-bindgen-go/cmd/print"
-	"github.com/ydnar/wasm-tools-go/cmd/wit-bindgen-go/cmd/syntax"
+	"github.com/ydnar/wasm-tools-go/cmd/wit-bindgen-go/cmd/wit"
 )
 
 func main() {
@@ -17,6 +17,7 @@ func main() {
 		Commands: []*cli.Command{
 			syntax.Command,
 			print.Command,
+			wit.Command,
 		},
 	}
 
