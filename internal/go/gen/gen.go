@@ -11,11 +11,8 @@ import (
 // Package represents a Go package, containing zero or more files
 // of generated code, along with zero or more declarations.
 type Package struct {
-	// Path is the Go package path, e.g. "encoding/json"
-	Path string
-
-	// Name is the short Go package name, e.g. "json"
-	Name string
+	// Ident is the package path and name.
+	Ident
 
 	// Files is the list of Go source files in this package.
 	Files map[string]*File

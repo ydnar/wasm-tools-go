@@ -28,6 +28,29 @@ func ParseIdent(s string) (Ident, error) {
 	return id, err
 }
 
+// PackageIdent returns the package-only Ident for id.
+// For example, "wasi:clocks/wall-clock.DateTime" returns "wasi:clocks".
+func (id Ident) PackageIdent() Ident {
+	return Ident{
+		Package: id.Package,
+	}
+}
+
+// InterfaceIdent returns the interface-only Ident for id.
+// For example, "wasi:clocks/wall-clock.DateTime" returns "wasi:clocks/wall-clock".
+func (id Ident) InterfaceIdent() Ident {
+	return Ident{
+		Package:   id.Package,
+		Interface: id.Interface,
+	}
+}
+
+// WorldIdent returns the world-only Ident for id.
+// For example, "wasi:clocks/imports.DateTime" returns "wasi:clocks/imports".
+func (id Ident) WorldIdent() Ident {
+	return id.InterfaceIdent()
+}
+
 // String returns the canonical string representation of id. It implements the [fmt.Stringer] interface.
 //
 // The canonical string representation of an [Ident] is "$package[/$interface[.$name]]". Examples:
