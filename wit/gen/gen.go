@@ -40,6 +40,10 @@ type Package struct {
 
 	// Files is the list of Go source files in this package.
 	Files map[string]*File
+
+	// Decls is the top-level declaractions in this package,
+	// including constants, variables, and functions.
+	Decls map[string]struct{}
 }
 
 type File struct {
