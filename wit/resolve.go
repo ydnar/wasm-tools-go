@@ -1125,26 +1125,14 @@ func (pn *PackageName) Validate() error {
 // String implements [fmt.Stringer], returning the canonical string representation of a [PackageName].
 func (pn *PackageName) String() string {
 	if pn.Version == nil {
-		return pn.Namespace + ":" + pn.Name
+		return pn.ShortString()
 	}
 	return pn.Namespace + ":" + pn.Name + "@" + pn.Version.String()
 }
 
-// ID represents a WIT identifier. It is a combination of:
-//   - A [PackageName], with optional version information
-//   - An optional interface name
-//   - An optional name
-//
-// The canonical string representation of an ID is "$package[/$interface[.$name]]". Examples:
-//   - For a [Package]: "wasi:clocks"
-//   - For a [Package] with a specific version: "wasi:clocks@1.0.0"
-//   - For an [Interface]: "wasi:clocks/wall-clock"
-//   - For a [Type]: "wasi:clocks/wall-clock.datetime"
-//   - For a [Function]: "wasi:clocks/wall-clock.now"
-type ID struct {
-	Package   PackageName
-	Interface string
-	Name      string
+// ShortString returns the canonical string representation of a [PackageName] pn without version information.
+func (pn *PackageName) ShortString() string {
+	return pn.Namespace + ":" + pn.Name
 }
 
 // Docs represent WIT documentation text extracted from comments.

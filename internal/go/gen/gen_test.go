@@ -18,5 +18,5 @@ func TestFileString(t *testing.T) {
 		},
 	}
 
-	fmt.Println(f.String())
+	fmt.Println(string(f.Bytes()))
 }
