@@ -4,6 +4,8 @@
 package bindgen
 
 import (
+	"fmt"
+
 	"github.com/ydnar/wasm-tools-go/internal/go/gen"
 	"github.com/ydnar/wasm-tools-go/wit"
 )
@@ -17,7 +19,13 @@ func Go(res *wit.Resolve, opts ...Option) ([]*gen.Package, error) {
 	state.opts.apply(opts...)
 	state.res = res
 
-	// Generate Go code here...
+	// By default, each WIT interface and world maps to a single Go package.
+	// Options might override the Go package, including combining multiple
+	// WIT interfaces and/or worlds into a single Go package.
+	for _, w := range state.res.Worlds {
+		id := worldIdent(w)
+		fmt.Printf("%s → %s\n", id, id)
+	}
 
 	return state.finish()
 }
@@ -34,4 +42,11 @@ func (state *genState) finish() ([]*gen.Package, error) {
 		packages = append(packages, pkg)
 	}
 	return packages, nil
+}
+
+func worldIdent(w *wit.World) wit.Ident {
+	var id wit.Ident
+	id.Package = w.Package.Name.ShortString()
+	id.Interface = w.Name
+	return id
 }
