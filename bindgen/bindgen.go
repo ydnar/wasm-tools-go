@@ -5,6 +5,8 @@ package bindgen
 
 import (
 	"fmt"
+	"path/filepath"
+	"runtime"
 	"strings"
 
 	"github.com/ydnar/wasm-tools-go/internal/codec"
@@ -43,13 +45,17 @@ type generator struct {
 }
 
 func newGenerator(res *wit.Resolve, opts ...Option) (*generator, error) {
-	state := &generator{}
-	err := state.opts.apply(opts...)
+	g := &generator{}
+	err := g.opts.apply(opts...)
 	if err != nil {
 		return nil, err
 	}
-	state.res = res
-	return state, nil
+	if g.opts.generator == "" {
+		_, file, _, _ := runtime.Caller(0)
+		_, g.opts.generator = filepath.Split(filepath.Dir(filepath.Dir(file)))
+	}
+	g.res = res
+	return g, nil
 }
 
 func (g *generator) finish() ([]*gen.Package, error) {

@@ -25,7 +25,10 @@ func action(ctx *cli.Context) error {
 	if err != nil {
 		return err
 	}
-	packages, err := bindgen.Go(res)
+	packages, err := bindgen.Go(res,
+		bindgen.GeneratedBy(ctx.Command.Root().Name),
+		bindgen.MapIdents(ctx.StringMap("map")),
+	)
 	if err != nil {
 		return err
 	}
