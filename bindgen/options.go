@@ -1,10 +1,5 @@
 package bindgen
 
-import (
-	"github.com/ydnar/wasm-tools-go/internal/go/gen"
-	"github.com/ydnar/wasm-tools-go/wit"
-)
-
 // Option represents a single configuration option for this package.
 type Option interface {
 	applyOption(*options) error
@@ -26,7 +21,7 @@ type options struct {
 	// "wasi:clocks/wall-clock" -> "wasi/clocks/wall#wallclock" (for a Go short package name of wallclock)
 	// "wasi:clocks/wall-clock.datetime" -> "wasi/clocks/wall#DateTime"
 	// "wasi:clocks/wall-clock.now" -> "wasi/clocks/wall#Now"
-	idents map[wit.Ident]gen.Ident
+	idents map[string]string
 }
 
 func (opts *options) apply(o ...Option) error {
@@ -62,17 +57,9 @@ func GeneratedBy(name string) Option {
 func MapIdent(from, to string) Option {
 	return optionFunc(func(opts *options) error {
 		if opts.idents == nil {
-			opts.idents = make(map[wit.Ident]gen.Ident)
+			opts.idents = make(map[string]string)
 		}
-		fromIdent, err := wit.ParseIdent(from)
-		if err != nil {
-			return err
-		}
-		toIdent, err := gen.ParseIdent(to)
-		if err != nil {
-			return err
-		}
-		opts.idents[fromIdent] = toIdent
+		opts.idents[from] = to
 		return nil
 	})
 }

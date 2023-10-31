@@ -11,15 +11,18 @@ import (
 // Package represents a Go package, containing zero or more files
 // of generated code, along with zero or more declarations.
 type Package struct {
-	// Ident is the package path and name.
-	Ident
+	// Path is the Go package path, e.g. "encoding/json"
+	Path string
+
+	// Name is the short Go package name, e.g. "json"
+	Name string
 
 	// Files is the list of Go source files in this package.
 	Files map[string]*File
 
 	// Decls is the top-level declaractions in this package,
 	// including constants, variables, and functions.
-	Decls map[string]struct{}
+	Decls map[string]Decl
 }
 
 // File represents a generated file. It may be a Go file
@@ -28,7 +31,7 @@ type File struct {
 	// If Name ends in ".go" this file will be treated as a Go file.
 	Name string
 
-	// Build contains build tags, serialized as //gso:build ...
+	// Build contains build tags, serialized as //go:build ...
 	// Ignored if this is not a Go file.
 	Build string
 
@@ -112,6 +115,7 @@ func (b Bytes) Bytes() []byte {
 // Decl is the common interface implemented by declarations.
 type Decl interface {
 	Decl() string
+	Package() *Package
 	Node
 }
 

@@ -34,10 +34,12 @@ func Go(res *wit.Resolve, opts ...Option) ([]*gen.Package, error) {
 }
 
 type generator struct {
-	opts       options
-	res        *wit.Resolve
-	packages   map[string]*gen.Package
-	packageMap map[wit.Ident]*gen.Package
+	opts              options
+	res               *wit.Resolve
+	packages          map[string]*gen.Package
+	worldPackages     map[*wit.World]*gen.Package
+	interfacePackages map[*wit.Interface]*gen.Package
+	packageMap        map[string]*gen.Package
 }
 
 func newGenerator(res *wit.Resolve, opts ...Option) (*generator, error) {
@@ -58,35 +60,48 @@ func (g *generator) finish() ([]*gen.Package, error) {
 	return packages, nil
 }
 
-func (g *generator) goPackageIdent(id wit.Ident) gen.Ident {
-	// Remove Name field, which doesn’t affect package path.
-	id = id.InterfaceIdent()
-
-	// Check existing Go packages first.
-	if pkg, ok := g.packageMap[id]; ok {
-		return pkg.Ident
+// packageForWorld returns a Go package for [wit.World] w.
+// It attempts to map the WIT package and world name to a Go package path,
+// using the mappings in g.opts if present.
+func (g *generator) packageForWorld(w *wit.World) *gen.Package {
+	// Find existing.
+	if p, ok := g.worldPackages[w]; ok {
+		return p
 	}
 
-	// Check ident mappings.
-	if gid, ok := g.opts.idents[id]; ok {
-		return gid
-	}
-	var base string
-	if gid, ok := g.opts.idents[id.PackageIdent()]; ok {
-		base = gid.Path
+	// Create a new package.
+	var path string
+	var name string
+	if mapped, ok := g.opts.idents[w.Package.Name.ShortString()+"/"+w.Name]; ok {
+		path, name = gen.ParseSelector(mapped)
+	} else if mapped, ok := g.opts.idents[w.Package.Name.ShortString()]; ok {
+		path, name = gen.ParseSelector(mapped + "/" + w.Name)
 	} else {
-		base = strings.ReplaceAll(id.Package, ":", "/")
+		path = w.Package.Name.Namespace + "/" + w.Package.Name.Name + "/" + w.Name
+		name = w.Name
+	}
+	var _, _ = path, name
+	return nil
+}
+
+func (g *generator) packageName(s string) (path, name string) {
+	if pkg, ok := g.packageMap[s]; ok {
+		return pkg.Path, pkg.Name
 	}
 
-	// Concatenate
-	if id.Interface != "" {
-		return gen.Ident{
-			// TODO: strip '-' characters
-			Path: base + "/" + id.Interface,
+	// Try to map full string to Go package string, e.g. "wasi:clocks/monotonic-clock"
+	if mapped, ok := g.opts.idents[s]; ok {
+		return gen.ParseSelector(mapped)
+	}
+
+	// Extract package name from s, e.g. "wasi:clocks"
+	if pkg, dir, ok := strings.Cut(s, "/"); ok {
+		if mapped, ok := g.opts.idents[pkg]; ok {
+			return gen.ParseSelector(mapped + "/" + dir)
 		}
 	}
 
-	return gen.Ident{Path: base}
+	return "", ""
 }
 
 func worldIdent(w *wit.World) wit.Ident {
