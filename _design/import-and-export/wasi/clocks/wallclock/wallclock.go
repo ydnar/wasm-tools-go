@@ -21,20 +21,3 @@ func wasmexport_now() DateTime {
 func wasmexport_resolution() DateTime {
 	return WallClockExport.Resolution()
 }
-
-/*
-package wasi:clocks;
-
-interface wall-clock {
-    record datetime {
-        seconds: u64,
-        nanoseconds: u32
-    };
-    now: func() -> datetime;
-    resolution: func() -> datetime;
-}
-
-world imports {
-    import wall-clock;
-}
-*/
