@@ -44,6 +44,11 @@ type World struct {
 	_typeOwner
 }
 
+// Path returns the fully-qualified path for this world, such as "wasi:clocks/imports".
+func (w *World) Path() string {
+	return w.Package.Name.String() + "/" + w.Name
+}
+
 // AllFunctions [iterates] through all functions exported from or imported into a [World],
 // calling yield for each. Iteration will stop if yield returns false.
 //

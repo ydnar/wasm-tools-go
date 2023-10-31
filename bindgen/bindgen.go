@@ -24,12 +24,11 @@ func Go(res *wit.Resolve, opts ...Option) ([]*gen.Package, error) {
 		return nil, err
 	}
 
-	// By default, each WIT interface and world maps to a single Go package.
-	// Options might override the Go package, including combining multiple
-	// WIT interfaces and/or worlds into a single Go package.
-	for _, w := range g.res.Worlds {
-		id := worldIdent(w)
-		fmt.Printf("%s → %s\n", id, id)
+	fmt.Printf(HeaderPattern, g.opts.generator)
+	fmt.Println()
+	err = g.generateWorlds()
+	if err != nil {
+		return nil, err
 	}
 
 	return g.finish()
@@ -64,6 +63,58 @@ func (g *generator) finish() ([]*gen.Package, error) {
 		packages = append(packages, g.packages[path])
 	}
 	return packages, nil
+}
+
+// By default, each WIT interface and world maps to a single Go package.
+// Options might override the Go package, including combining multiple
+// WIT interfaces and/or worlds into a single Go package.
+func (g *generator) generateWorlds() error {
+	fmt.Printf("Generating Go for %d world(s)\n\n", len(g.res.Worlds))
+	for _, w := range g.res.Worlds {
+		g.generateWorld(w)
+	}
+	return nil
+}
+
+func (g *generator) generateWorld(w *wit.World) error {
+	fmt.Println(w.Path())
+	for _, name := range codec.SortedKeys(w.Imports) {
+		var err error
+		switch v := w.Imports[name].(type) {
+		case *wit.Interface:
+			err = g.generateImportedInterface(w, v, name)
+		case *wit.TypeDef:
+			err = g.generateImportedTypeDef(w, v, name)
+		case *wit.Function:
+			err = g.generateImportedFunction(w, v)
+		}
+		if err != nil {
+			return err
+		}
+	}
+	fmt.Println()
+	return nil
+}
+
+func (g *generator) generateImportedInterface(w *wit.World, i *wit.Interface, name string) error {
+	if i.Name != nil {
+		name = *i.Name
+	}
+	fmt.Printf("\timport interface %s/%s\n", w.Path(), name)
+	return nil
+}
+
+func (g *generator) generateImportedTypeDef(w *wit.World, t *wit.TypeDef, name string) error {
+	if t.Name != nil {
+		name = *t.Name
+	}
+	fmt.Printf("\timport type %s.%s\n", w.Path(), name)
+	return nil
+}
+
+func (g *generator) generateImportedFunction(w *wit.World, f *wit.Function) error {
+	fmt.Printf("\timport func %s.%s\n", w.Path(), f.Name)
+	return nil
 }
 
 // packageForWorld returns a Go package for [wit.World] w.
