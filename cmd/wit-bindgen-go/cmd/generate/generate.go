@@ -8,8 +8,15 @@ import (
 
 // Command is the CLI command for wit.
 var Command = &cli.Command{
-	Name:   "generate",
-	Usage:  "generates Go from a fully-resolved WIT JSON file",
+	Name:    "generate",
+	Aliases: []string{"go"},
+	Usage:   "generates Go from a fully-resolved WIT JSON file",
+	Flags: []cli.Flag{
+		&cli.StringMapFlag{
+			Name:  "map",
+			Usage: "maps WIT identifiers to Go identifiers",
+		},
+	},
 	Action: action,
 }
 
