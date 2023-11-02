@@ -1,36 +1,39 @@
 package wasi:io;
 
 interface poll {
-    resource pollable;
-    poll-list: func(in: list<borrow<pollable>>) -> list<u32>;
-    poll-one: func(in: borrow<pollable>);
+    resource pollable {
+        block: func();
+        ready: func() -> bool;
+    }
+    poll: func(in: list<borrow<pollable>>) -> list<u32>;
 }
 
 interface streams {
+    resource error {
+        to-debug-string: func() -> string;
+    }
     resource input-stream {
-        blocking-read: func(len: u64) -> result<tuple<list<u8>, stream-status>>;
-        blocking-skip: func(len: u64) -> result<tuple<u64, stream-status>>;
-        read: func(len: u64) -> result<tuple<list<u8>, stream-status>>;
-        skip: func(len: u64) -> result<tuple<u64, stream-status>>;
+        blocking-read: func(len: u64) -> result<list<u8>, stream-error>;
+        blocking-skip: func(len: u64) -> result<u64, stream-error>;
+        read: func(len: u64) -> result<list<u8>, stream-error>;
+        skip: func(len: u64) -> result<u64, stream-error>;
         subscribe: func() -> own<pollable>;
     }
     resource output-stream {
-        blocking-flush: func() -> result<_, write-error>;
-        blocking-splice: func(src: own<input-stream>, len: u64) -> result<tuple<u64, stream-status>>;
-        blocking-write-and-flush: func(contents: list<u8>) -> result<_, write-error>;
-        blocking-write-zeroes-and-flush: func(len: u64) -> result<_, write-error>;
-        check-write: func() -> result<u64, write-error>;
-        flush: func() -> result<_, write-error>;
-        forward: func(src: own<input-stream>) -> result<tuple<u64, stream-status>>;
-        splice: func(src: own<input-stream>, len: u64) -> result<tuple<u64, stream-status>>;
+        blocking-flush: func() -> result<_, stream-error>;
+        blocking-splice: func(src: borrow<input-stream>, len: u64) -> result<u64, stream-error>;
+        blocking-write-and-flush: func(contents: list<u8>) -> result<_, stream-error>;
+        blocking-write-zeroes-and-flush: func(len: u64) -> result<_, stream-error>;
+        check-write: func() -> result<u64, stream-error>;
+        flush: func() -> result<_, stream-error>;
+        splice: func(src: borrow<input-stream>, len: u64) -> result<u64, stream-error>;
         subscribe: func() -> own<pollable>;
-        write: func(contents: list<u8>) -> result<_, write-error>;
-        write-zeroes: func(len: u64) -> result<_, write-error>;
+        write: func(contents: list<u8>) -> result<_, stream-error>;
+        write-zeroes: func(len: u64) -> result<_, stream-error>;
     }
     use poll.{pollable};
-    enum stream-status { open, ended }
-    enum write-error {
-        last-operation-failed,
+    variant stream-error {
+        last-operation-failed(own<error>),
         closed
     }
 }
@@ -44,11 +47,13 @@ world imports {
 package wasi:clocks;
 
 interface monotonic-clock {
+    type duration = u64;
     type instant = u64;
     use wasi:io/poll.{pollable};
     now: func() -> instant;
-    resolution: func() -> instant;
-    subscribe: func(when: instant, absolute: bool) -> own<pollable>;
+    resolution: func() -> duration;
+    subscribe-duration: func(when: duration) -> own<pollable>;
+    subscribe-instant: func(when: instant) -> own<pollable>;
 }
 
 interface timezone {
