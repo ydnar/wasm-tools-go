@@ -1,3 +1,5 @@
+//go:build wasm
+
 package wallclock
 
 // Instance is the sole global instance of the

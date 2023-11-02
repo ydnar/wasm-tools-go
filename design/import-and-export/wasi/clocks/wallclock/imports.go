@@ -1,3 +1,5 @@
+//go:build wasm
+
 package wallclock
 
 // Now returns a DateTime for the current wall clock, corresponding to

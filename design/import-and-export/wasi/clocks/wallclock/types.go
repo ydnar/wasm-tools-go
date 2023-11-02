@@ -1,3 +1,5 @@
+//go:build wasm
+
 package wallclock
 
 // Interface is the exported Go interface of
