@@ -18,11 +18,10 @@ func wasmexport_poll(data *Pollable, size uint32) (*uint32, uint32) {
 
 //go:wasmexport wasi:io/poll [method]pollable.block
 func wasmexport_method_pollable_block(self Pollable) {
-	// TODO
+	self.Block()
 }
 
 //go:wasmexport wasi:io/poll [method]pollable.ready
 func wasmexport_method_pollable_ready(self Pollable) bool {
-	// TODO
-	return false
+	return self.Ready()
 }
