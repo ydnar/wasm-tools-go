@@ -6,11 +6,11 @@ import (
 	"unsafe"
 
 	"github.com/ydnar/wasm-tools-go/design/wasi/io/poll"
-	"github.com/ydnar/wasm-tools-go/wasm/cm"
+	"github.com/ydnar/wasm-tools-go/wasm/cabi"
 )
 
 // Pollable represents the Component Model type "wasi:io/poll.pollable".
-type Pollable cm.Handle[poll.Pollable]
+type Pollable cabi.Handle[poll.Pollable]
 
 var _ poll.Pollable = Pollable(0)
 
@@ -24,8 +24,8 @@ func Poll(in []poll.Pollable) []uint32 {
 	return unsafe.Slice(ptr, size)
 }
 
-func (self Pollable) ResourceHandle() cm.Handle[poll.Pollable] {
-	return cm.Handle[poll.Pollable](self)
+func (self Pollable) ResourceHandle() cabi.Handle[poll.Pollable] {
+	return cabi.Handle[poll.Pollable](self)
 }
 
 //go:wasmimport wasi:io/poll poll

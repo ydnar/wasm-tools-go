@@ -1,4 +1,4 @@
-package cm
+package cabi
 
 type Bool bool
 type S8 int8

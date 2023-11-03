@@ -1,4 +1,4 @@
-package cm
+package cabi
 
 // Resource is the interface implemented by all [resource] types.
 type Resource[T any] interface {

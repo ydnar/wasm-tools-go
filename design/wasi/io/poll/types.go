@@ -1,10 +1,10 @@
 package poll
 
-import "github.com/ydnar/wasm-tools-go/wasm/cm"
+import "github.com/ydnar/wasm-tools-go/wasm/cabi"
 
 // Pollable represents the Component Model type "wasi:io/poll.pollable".
 type Pollable interface {
 	Block()
 	Ready() bool
-	cm.Resource[Pollable]
+	cabi.Resource[Pollable]
 }
