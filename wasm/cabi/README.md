@@ -2,7 +2,7 @@
 
 ## Types
 
-Package `cabi` declares a number of types, including the Component Model primitive types, along with resource and handle types.
+Package `cabi` declares a number of types, including [Component Model](https://component-model.bytecodealliance.org/) [primitive types](https://component-model.bytecodealliance.org/design/wit.html#primitive-types), along with resource and handle types.
 
 ## cabi_realloc
 
