@@ -43,42 +43,7 @@ world imports {
     import streams;
 }
 
-
-package wasi:clocks;
-
-interface monotonic-clock {
-    type duration = u64;
-    type instant = u64;
-    use wasi:io/poll.{pollable};
-    now: func() -> instant;
-    resolution: func() -> duration;
-    subscribe-duration: func(when: duration) -> own<pollable>;
-    subscribe-instant: func(when: instant) -> own<pollable>;
-}
-
-interface timezone {
-    use wall-clock.{datetime};
-    record timezone-display {
-        utc-offset: s32,
-        name: string,
-        in-daylight-saving-time: bool
-    }
-    display: func(when: datetime) -> timezone-display;
-    utc-offset: func(when: datetime) -> s32;
-}
-
-interface wall-clock {
-    record datetime {
-        seconds: u64,
-        nanoseconds: u32
-    }
-    now: func() -> datetime;
-    resolution: func() -> datetime;
-}
-
-world imports {
-    import monotonic-clock;
-    import wasi:io/poll;
-    import timezone;
-    import wall-clock;
+world exports {
+    export poll;
+    export streams;
 }

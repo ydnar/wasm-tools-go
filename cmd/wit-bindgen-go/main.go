@@ -6,8 +6,10 @@ import (
 	"os"
 
 	"github.com/urfave/cli/v3"
+
+	"github.com/ydnar/wasm-tools-go/cmd/wit-bindgen-go/cmd/generate"
 	"github.com/ydnar/wasm-tools-go/cmd/wit-bindgen-go/cmd/print"
-	"github.com/ydnar/wasm-tools-go/cmd/wit-bindgen-go/cmd/syntax"
+	"github.com/ydnar/wasm-tools-go/cmd/wit-bindgen-go/cmd/wit"
 )
 
 func main() {
@@ -15,8 +17,9 @@ func main() {
 		Name:  "wit-bindgen-go",
 		Usage: "inspect or manipulate WebAssembly Interface Types for Go",
 		Commands: []*cli.Command{
-			syntax.Command,
+			generate.Command,
 			print.Command,
+			wit.Command,
 		},
 	}
 

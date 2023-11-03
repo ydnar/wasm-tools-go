@@ -16,8 +16,65 @@
                         },
                     },
                     Functions: {
-                        "poll-list": &wit.Function{
-                            Name:   "poll-list",
+                        "[method]pollable.block": &wit.Function{
+                            Name: "[method]pollable.block",
+                            Kind: &wit.Method{
+                                Type:          &wit.TypeDef{(CYCLIC REFERENCE)},
+                                _functionKind: wit._functionKind{},
+                            },
+                            Params: {
+                                {
+                                    Name: "self",
+                                    Type: &wit.TypeDef{
+                                        Name: (*string)(nil),
+                                        Kind: &wit.BorrowedHandle{
+                                            Type:    &wit.TypeDef{(CYCLIC REFERENCE)},
+                                            _handle: wit._handle{},
+                                        },
+                                        Owner:      nil,
+                                        Docs:       wit.Docs{},
+                                        _worldItem: wit._worldItem{},
+                                        _type:      wit._type{},
+                                    },
+                                },
+                            },
+                            Results:    nil,
+                            Docs:       wit.Docs{},
+                            _worldItem: wit._worldItem{},
+                        },
+                        "[method]pollable.ready": &wit.Function{
+                            Name: "[method]pollable.ready",
+                            Kind: &wit.Method{
+                                Type:          &wit.TypeDef{(CYCLIC REFERENCE)},
+                                _functionKind: wit._functionKind{},
+                            },
+                            Params: {
+                                {
+                                    Name: "self",
+                                    Type: &wit.TypeDef{
+                                        Name: (*string)(nil),
+                                        Kind: &wit.BorrowedHandle{
+                                            Type:    &wit.TypeDef{(CYCLIC REFERENCE)},
+                                            _handle: wit._handle{},
+                                        },
+                                        Owner:      nil,
+                                        Docs:       wit.Docs{},
+                                        _worldItem: wit._worldItem{},
+                                        _type:      wit._type{},
+                                    },
+                                },
+                            },
+                            Results: {
+                                {
+                                    Name: "",
+                                    Type: wit.Bool{},
+                                },
+                            },
+                            Docs:       wit.Docs{},
+                            _worldItem: wit._worldItem{},
+                        },
+                        "poll": &wit.Function{
+                            Name:   "poll",
                             Kind:   &wit.Freestanding{},
                             Params: {
                                 {
@@ -25,17 +82,7 @@
                                     Type: &wit.TypeDef{
                                         Name: (*string)(nil),
                                         Kind: &wit.List{
-                                            Type: &wit.TypeDef{
-                                                Name: (*string)(nil),
-                                                Kind: &wit.BorrowedHandle{
-                                                    Type:    &wit.TypeDef{(CYCLIC REFERENCE)},
-                                                    _handle: wit._handle{},
-                                                },
-                                                Owner:      nil,
-                                                Docs:       wit.Docs{},
-                                                _worldItem: wit._worldItem{},
-                                                _type:      wit._type{},
-                                            },
+                                            Type:         &wit.TypeDef{(CYCLIC REFERENCE)},
                                             _typeDefKind: wit._typeDefKind{},
                                         },
                                         Owner:      nil,
@@ -64,29 +111,6 @@
                             Docs:       wit.Docs{},
                             _worldItem: wit._worldItem{},
                         },
-                        "poll-one": &wit.Function{
-                            Name:   "poll-one",
-                            Kind:   &wit.Freestanding{},
-                            Params: {
-                                {
-                                    Name: "in",
-                                    Type: &wit.TypeDef{
-                                        Name: (*string)(nil),
-                                        Kind: &wit.BorrowedHandle{
-                                            Type:    &wit.TypeDef{(CYCLIC REFERENCE)},
-                                            _handle: wit._handle{},
-                                        },
-                                        Owner:      nil,
-                                        Docs:       wit.Docs{},
-                                        _worldItem: wit._worldItem{},
-                                        _type:      wit._type{},
-                                    },
-                                },
-                            },
-                            Results:    nil,
-                            Docs:       wit.Docs{},
-                            _worldItem: wit._worldItem{},
-                        },
                     },
                     Package: &wit.Package{
                         Name: wit.PackageName{
@@ -100,6 +124,14 @@
                             "streams": &wit.Interface{
                                 Name:     &"streams",
                                 TypeDefs: {
+                                    "error": &wit.TypeDef{
+                                        Name:       &"error",
+                                        Kind:       &wit.Resource{(CYCLIC REFERENCE)},
+                                        Owner:      &wit.Interface{(CYCLIC REFERENCE)},
+                                        Docs:       wit.Docs{},
+                                        _worldItem: wit._worldItem{},
+                                        _type:      wit._type{},
+                                    },
                                     "input-stream": &wit.TypeDef{
                                         Name:       &"input-stream",
                                         Kind:       &wit.Resource{(CYCLIC REFERENCE)},
@@ -124,36 +156,28 @@
                                         _worldItem: wit._worldItem{},
                                         _type:      wit._type{},
                                     },
-                                    "stream-status": &wit.TypeDef{
-                                        Name: &"stream-status",
-                                        Kind: &wit.Enum{
-                                            Cases: {
-                                                {
-                                                    Name: "open",
-                                                    Docs: wit.Docs{},
-                                                },
-                                                {
-                                                    Name: "ended",
-                                                    Docs: wit.Docs{},
-                                                },
-                                            },
-                                            _typeDefKind: wit._typeDefKind{},
-                                        },
-                                        Owner:      &wit.Interface{(CYCLIC REFERENCE)},
-                                        Docs:       wit.Docs{},
-                                        _worldItem: wit._worldItem{},
-                                        _type:      wit._type{},
-                                    },
-                                    "write-error": &wit.TypeDef{
-                                        Name: &"write-error",
-                                        Kind: &wit.Enum{
+                                    "stream-error": &wit.TypeDef{
+                                        Name: &"stream-error",
+                                        Kind: &wit.Variant{
                                             Cases: {
                                                 {
                                                     Name: "last-operation-failed",
+                                                    Type: &wit.TypeDef{
+                                                        Name: (*string)(nil),
+                                                        Kind: &wit.OwnedHandle{
+                                                            Type:    &!%v(DEPTH EXCEEDED),
+                                                            _handle: wit._handle{},
+                                                        },
+                                                        Owner:      nil,
+                                                        Docs:       wit.Docs{},
+                                                        _worldItem: wit._worldItem{},
+                                                        _type:      wit._type{},
+                                                    },
                                                     Docs: wit.Docs{},
                                                 },
                                                 {
                                                     Name: "closed",
+                                                    Type: nil,
                                                     Docs: wit.Docs{},
                                                 },
                                             },
@@ -166,6 +190,37 @@
                                     },
                                 },
                                 Functions: {
+                                    "[method]error.to-debug-string": &wit.Function{
+                                        Name: "[method]error.to-debug-string",
+                                        Kind: &wit.Method{
+                                            Type:          &wit.TypeDef{(CYCLIC REFERENCE)},
+                                            _functionKind: wit._functionKind{},
+                                        },
+                                        Params: {
+                                            {
+                                                Name: "self",
+                                                Type: &wit.TypeDef{
+                                                    Name: (*string)(nil),
+                                                    Kind: &wit.BorrowedHandle{
+                                                        Type:    &wit.TypeDef{(CYCLIC REFERENCE)},
+                                                        _handle: wit._handle{},
+                                                    },
+                                                    Owner:      nil,
+                                                    Docs:       wit.Docs{},
+                                                    _worldItem: wit._worldItem{},
+                                                    _type:      wit._type{},
+                                                },
+                                            },
+                                        },
+                                        Results: {
+                                            {
+                                                Name: "",
+                                                Type: wit.String{},
+                                            },
+                                        },
+                                        Docs:       wit.Docs{},
+                                        _worldItem: wit._worldItem{},
+                                    },
                                     "[method]input-stream.blocking-read": &wit.Function{
                                         Name: "[method]input-stream.blocking-read",
                                         Kind: &wit.Method{
@@ -206,7 +261,7 @@
                                                             _worldItem: wit._worldItem{},
                                                             _type:      wit._type{},
                                                         },
-                                                        Err:          nil,
+                                                        Err:          &wit.TypeDef{(CYCLIC REFERENCE)},
                                                         _typeDefKind: wit._typeDefKind{},
                                                     },
                                                     Owner:      nil,
@@ -251,15 +306,8 @@
                                                 Type: &wit.TypeDef{
                                                     Name: (*string)(nil),
                                                     Kind: &wit.Result{
-                                                        OK: &wit.TypeDef{
-                                                            Name:       (*string)(nil),
-                                                            Kind:       &!%v(DEPTH EXCEEDED),
-                                                            Owner:      nil,
-                                                            Docs:       wit.Docs{},
-                                                            _worldItem: wit._worldItem{},
-                                                            _type:      wit._type{},
-                                                        },
-                                                        Err:          nil,
+                                                        OK:           wit.U64{},
+                                                        Err:          &wit.TypeDef{(CYCLIC REFERENCE)},
                                                         _typeDefKind: wit._typeDefKind{},
                                                     },
                                                     Owner:      nil,
@@ -312,7 +360,7 @@
                                                             _worldItem: wit._worldItem{},
                                                             _type:      wit._type{},
                                                         },
-                                                        Err:          nil,
+                                                        Err:          &wit.TypeDef{(CYCLIC REFERENCE)},
                                                         _typeDefKind: wit._typeDefKind{},
                                                     },
                                                     Owner:      nil,
@@ -357,15 +405,8 @@
                                                 Type: &wit.TypeDef{
                                                     Name: (*string)(nil),
                                                     Kind: &wit.Result{
-                                                        OK: &wit.TypeDef{
-                                                            Name:       (*string)(nil),
-                                                            Kind:       &!%v(DEPTH EXCEEDED),
-                                                            Owner:      nil,
-                                                            Docs:       wit.Docs{},
-                                                            _worldItem: wit._worldItem{},
-                                                            _type:      wit._type{},
-                                                        },
-                                                        Err:          nil,
+                                                        OK:           wit.U64{},
+                                                        Err:          &wit.TypeDef{(CYCLIC REFERENCE)},
                                                         _typeDefKind: wit._typeDefKind{},
                                                     },
                                                     Owner:      nil,
@@ -486,7 +527,7 @@
                                                 Name: "src",
                                                 Type: &wit.TypeDef{
                                                     Name: (*string)(nil),
-                                                    Kind: &wit.OwnedHandle{
+                                                    Kind: &wit.BorrowedHandle{
                                                         Type:    &wit.TypeDef{(CYCLIC REFERENCE)},
                                                         _handle: wit._handle{},
                                                     },
@@ -507,15 +548,8 @@
                                                 Type: &wit.TypeDef{
                                                     Name: (*string)(nil),
                                                     Kind: &wit.Result{
-                                                        OK: &wit.TypeDef{
-                                                            Name:       (*string)(nil),
-                                                            Kind:       &!%v(DEPTH EXCEEDED),
-                                                            Owner:      nil,
-                                                            Docs:       wit.Docs{},
-                                                            _worldItem: wit._worldItem{},
-                                                            _type:      wit._type{},
-                                                        },
-                                                        Err:          nil,
+                                                        OK:           wit.U64{},
+                                                        Err:          &wit.TypeDef{(CYCLIC REFERENCE)},
                                                         _typeDefKind: wit._typeDefKind{},
                                                     },
                                                     Owner:      nil,
@@ -714,69 +748,6 @@
                                         Docs:       wit.Docs{},
                                         _worldItem: wit._worldItem{},
                                     },
-                                    "[method]output-stream.forward": &wit.Function{
-                                        Name: "[method]output-stream.forward",
-                                        Kind: &wit.Method{
-                                            Type:          &wit.TypeDef{(CYCLIC REFERENCE)},
-                                            _functionKind: wit._functionKind{},
-                                        },
-                                        Params: {
-                                            {
-                                                Name: "self",
-                                                Type: &wit.TypeDef{
-                                                    Name: (*string)(nil),
-                                                    Kind: &wit.BorrowedHandle{
-                                                        Type:    &wit.TypeDef{(CYCLIC REFERENCE)},
-                                                        _handle: wit._handle{},
-                                                    },
-                                                    Owner:      nil,
-                                                    Docs:       wit.Docs{},
-                                                    _worldItem: wit._worldItem{},
-                                                    _type:      wit._type{},
-                                                },
-                                            },
-                                            {
-                                                Name: "src",
-                                                Type: &wit.TypeDef{
-                                                    Name: (*string)(nil),
-                                                    Kind: &wit.OwnedHandle{
-                                                        Type:    &wit.TypeDef{(CYCLIC REFERENCE)},
-                                                        _handle: wit._handle{},
-                                                    },
-                                                    Owner:      nil,
-                                                    Docs:       wit.Docs{},
-                                                    _worldItem: wit._worldItem{},
-                                                    _type:      wit._type{},
-                                                },
-                                            },
-                                        },
-                                        Results: {
-                                            {
-                                                Name: "",
-                                                Type: &wit.TypeDef{
-                                                    Name: (*string)(nil),
-                                                    Kind: &wit.Result{
-                                                        OK: &wit.TypeDef{
-                                                            Name:       (*string)(nil),
-                                                            Kind:       &!%v(DEPTH EXCEEDED),
-                                                            Owner:      nil,
-                                                            Docs:       wit.Docs{},
-                                                            _worldItem: wit._worldItem{},
-                                                            _type:      wit._type{},
-                                                        },
-                                                        Err:          nil,
-                                                        _typeDefKind: wit._typeDefKind{},
-                                                    },
-                                                    Owner:      nil,
-                                                    Docs:       wit.Docs{},
-                                                    _worldItem: wit._worldItem{},
-                                                    _type:      wit._type{},
-                                                },
-                                            },
-                                        },
-                                        Docs:       wit.Docs{},
-                                        _worldItem: wit._worldItem{},
-                                    },
                                     "[method]output-stream.splice": &wit.Function{
                                         Name: "[method]output-stream.splice",
                                         Kind: &wit.Method{
@@ -802,7 +773,7 @@
                                                 Name: "src",
                                                 Type: &wit.TypeDef{
                                                     Name: (*string)(nil),
-                                                    Kind: &wit.OwnedHandle{
+                                                    Kind: &wit.BorrowedHandle{
                                                         Type:    &wit.TypeDef{(CYCLIC REFERENCE)},
                                                         _handle: wit._handle{},
                                                     },
@@ -823,15 +794,8 @@
                                                 Type: &wit.TypeDef{
                                                     Name: (*string)(nil),
                                                     Kind: &wit.Result{
-                                                        OK: &wit.TypeDef{
-                                                            Name:       (*string)(nil),
-                                                            Kind:       &!%v(DEPTH EXCEEDED),
-                                                            Owner:      nil,
-                                                            Docs:       wit.Docs{},
-                                                            _worldItem: wit._worldItem{},
-                                                            _type:      wit._type{},
-                                                        },
-                                                        Err:          nil,
+                                                        OK:           wit.U64{},
+                                                        Err:          &wit.TypeDef{(CYCLIC REFERENCE)},
                                                         _typeDefKind: wit._typeDefKind{},
                                                     },
                                                     Owner:      nil,
@@ -1006,6 +970,14 @@
                 "interface-1": &wit.Interface{
                     Name:     &"streams",
                     TypeDefs: {
+                        "error": &wit.TypeDef{
+                            Name:       &"error",
+                            Kind:       &wit.Resource{},
+                            Owner:      &wit.Interface{(CYCLIC REFERENCE)},
+                            Docs:       wit.Docs{},
+                            _worldItem: wit._worldItem{},
+                            _type:      wit._type{},
+                        },
                         "input-stream": &wit.TypeDef{
                             Name:       &"input-stream",
                             Kind:       &wit.Resource{},
@@ -1030,36 +1002,28 @@
                             _worldItem: wit._worldItem{},
                             _type:      wit._type{},
                         },
-                        "stream-status": &wit.TypeDef{
-                            Name: &"stream-status",
-                            Kind: &wit.Enum{
-                                Cases: {
-                                    {
-                                        Name: "open",
-                                        Docs: wit.Docs{},
-                                    },
-                                    {
-                                        Name: "ended",
-                                        Docs: wit.Docs{},
-                                    },
-                                },
-                                _typeDefKind: wit._typeDefKind{},
-                            },
-                            Owner:      &wit.Interface{(CYCLIC REFERENCE)},
-                            Docs:       wit.Docs{},
-                            _worldItem: wit._worldItem{},
-                            _type:      wit._type{},
-                        },
-                        "write-error": &wit.TypeDef{
-                            Name: &"write-error",
-                            Kind: &wit.Enum{
+                        "stream-error": &wit.TypeDef{
+                            Name: &"stream-error",
+                            Kind: &wit.Variant{
                                 Cases: {
                                     {
                                         Name: "last-operation-failed",
+                                        Type: &wit.TypeDef{
+                                            Name: (*string)(nil),
+                                            Kind: &wit.OwnedHandle{
+                                                Type:    &wit.TypeDef{(CYCLIC REFERENCE)},
+                                                _handle: wit._handle{},
+                                            },
+                                            Owner:      nil,
+                                            Docs:       wit.Docs{},
+                                            _worldItem: wit._worldItem{},
+                                            _type:      wit._type{},
+                                        },
                                         Docs: wit.Docs{},
                                     },
                                     {
                                         Name: "closed",
+                                        Type: nil,
                                         Docs: wit.Docs{},
                                     },
                                 },
@@ -1072,6 +1036,37 @@
                         },
                     },
                     Functions: {
+                        "[method]error.to-debug-string": &wit.Function{
+                            Name: "[method]error.to-debug-string",
+                            Kind: &wit.Method{
+                                Type:          &wit.TypeDef{(CYCLIC REFERENCE)},
+                                _functionKind: wit._functionKind{},
+                            },
+                            Params: {
+                                {
+                                    Name: "self",
+                                    Type: &wit.TypeDef{
+                                        Name: (*string)(nil),
+                                        Kind: &wit.BorrowedHandle{
+                                            Type:    &wit.TypeDef{(CYCLIC REFERENCE)},
+                                            _handle: wit._handle{},
+                                        },
+                                        Owner:      nil,
+                                        Docs:       wit.Docs{},
+                                        _worldItem: wit._worldItem{},
+                                        _type:      wit._type{},
+                                    },
+                                },
+                            },
+                            Results: {
+                                {
+                                    Name: "",
+                                    Type: wit.String{},
+                                },
+                            },
+                            Docs:       wit.Docs{},
+                            _worldItem: wit._worldItem{},
+                        },
                         "[method]input-stream.blocking-read": &wit.Function{
                             Name: "[method]input-stream.blocking-read",
                             Kind: &wit.Method{
@@ -1106,11 +1101,8 @@
                                         Kind: &wit.Result{
                                             OK: &wit.TypeDef{
                                                 Name: (*string)(nil),
-                                                Kind: &wit.Tuple{
-                                                    Types: {
-                                                        &!%v(DEPTH EXCEEDED),
-                                                        &!%v(DEPTH EXCEEDED),
-                                                    },
+                                                Kind: &wit.List{
+                                                    Type:         wit.U8{},
                                                     _typeDefKind: wit._typeDefKind{},
                                                 },
                                                 Owner:      nil,
@@ -1118,7 +1110,7 @@
                                                 _worldItem: wit._worldItem{},
                                                 _type:      wit._type{},
                                             },
-                                            Err:          nil,
+                                            Err:          &wit.TypeDef{(CYCLIC REFERENCE)},
                                             _typeDefKind: wit._typeDefKind{},
                                         },
                                         Owner:      nil,
@@ -1163,21 +1155,8 @@
                                     Type: &wit.TypeDef{
                                         Name: (*string)(nil),
                                         Kind: &wit.Result{
-                                            OK: &wit.TypeDef{
-                                                Name: (*string)(nil),
-                                                Kind: &wit.Tuple{
-                                                    Types: {
-                                                        wit.U64{},
-                                                        &!%v(DEPTH EXCEEDED),
-                                                    },
-                                                    _typeDefKind: wit._typeDefKind{},
-                                                },
-                                                Owner:      nil,
-                                                Docs:       wit.Docs{},
-                                                _worldItem: wit._worldItem{},
-                                                _type:      wit._type{},
-                                            },
-                                            Err:          nil,
+                                            OK:           wit.U64{},
+                                            Err:          &wit.TypeDef{(CYCLIC REFERENCE)},
                                             _typeDefKind: wit._typeDefKind{},
                                         },
                                         Owner:      nil,
@@ -1224,11 +1203,8 @@
                                         Kind: &wit.Result{
                                             OK: &wit.TypeDef{
                                                 Name: (*string)(nil),
-                                                Kind: &wit.Tuple{
-                                                    Types: {
-                                                        &!%v(DEPTH EXCEEDED),
-                                                        &!%v(DEPTH EXCEEDED),
-                                                    },
+                                                Kind: &wit.List{
+                                                    Type:         wit.U8{},
                                                     _typeDefKind: wit._typeDefKind{},
                                                 },
                                                 Owner:      nil,
@@ -1236,7 +1212,7 @@
                                                 _worldItem: wit._worldItem{},
                                                 _type:      wit._type{},
                                             },
-                                            Err:          nil,
+                                            Err:          &wit.TypeDef{(CYCLIC REFERENCE)},
                                             _typeDefKind: wit._typeDefKind{},
                                         },
                                         Owner:      nil,
@@ -1281,21 +1257,8 @@
                                     Type: &wit.TypeDef{
                                         Name: (*string)(nil),
                                         Kind: &wit.Result{
-                                            OK: &wit.TypeDef{
-                                                Name: (*string)(nil),
-                                                Kind: &wit.Tuple{
-                                                    Types: {
-                                                        wit.U64{},
-                                                        &!%v(DEPTH EXCEEDED),
-                                                    },
-                                                    _typeDefKind: wit._typeDefKind{},
-                                                },
-                                                Owner:      nil,
-                                                Docs:       wit.Docs{},
-                                                _worldItem: wit._worldItem{},
-                                                _type:      wit._type{},
-                                            },
-                                            Err:          nil,
+                                            OK:           wit.U64{},
+                                            Err:          &wit.TypeDef{(CYCLIC REFERENCE)},
                                             _typeDefKind: wit._typeDefKind{},
                                         },
                                         Owner:      nil,
@@ -1416,7 +1379,7 @@
                                     Name: "src",
                                     Type: &wit.TypeDef{
                                         Name: (*string)(nil),
-                                        Kind: &wit.OwnedHandle{
+                                        Kind: &wit.BorrowedHandle{
                                             Type:    &wit.TypeDef{(CYCLIC REFERENCE)},
                                             _handle: wit._handle{},
                                         },
@@ -1437,21 +1400,8 @@
                                     Type: &wit.TypeDef{
                                         Name: (*string)(nil),
                                         Kind: &wit.Result{
-                                            OK: &wit.TypeDef{
-                                                Name: (*string)(nil),
-                                                Kind: &wit.Tuple{
-                                                    Types: {
-                                                        wit.U64{},
-                                                        &!%v(DEPTH EXCEEDED),
-                                                    },
-                                                    _typeDefKind: wit._typeDefKind{},
-                                                },
-                                                Owner:      nil,
-                                                Docs:       wit.Docs{},
-                                                _worldItem: wit._worldItem{},
-                                                _type:      wit._type{},
-                                            },
-                                            Err:          nil,
+                                            OK:           wit.U64{},
+                                            Err:          &wit.TypeDef{(CYCLIC REFERENCE)},
                                             _typeDefKind: wit._typeDefKind{},
                                         },
                                         Owner:      nil,
@@ -1650,75 +1600,6 @@
                             Docs:       wit.Docs{},
                             _worldItem: wit._worldItem{},
                         },
-                        "[method]output-stream.forward": &wit.Function{
-                            Name: "[method]output-stream.forward",
-                            Kind: &wit.Method{
-                                Type:          &wit.TypeDef{(CYCLIC REFERENCE)},
-                                _functionKind: wit._functionKind{},
-                            },
-                            Params: {
-                                {
-                                    Name: "self",
-                                    Type: &wit.TypeDef{
-                                        Name: (*string)(nil),
-                                        Kind: &wit.BorrowedHandle{
-                                            Type:    &wit.TypeDef{(CYCLIC REFERENCE)},
-                                            _handle: wit._handle{},
-                                        },
-                                        Owner:      nil,
-                                        Docs:       wit.Docs{},
-                                        _worldItem: wit._worldItem{},
-                                        _type:      wit._type{},
-                                    },
-                                },
-                                {
-                                    Name: "src",
-                                    Type: &wit.TypeDef{
-                                        Name: (*string)(nil),
-                                        Kind: &wit.OwnedHandle{
-                                            Type:    &wit.TypeDef{(CYCLIC REFERENCE)},
-                                            _handle: wit._handle{},
-                                        },
-                                        Owner:      nil,
-                                        Docs:       wit.Docs{},
-                                        _worldItem: wit._worldItem{},
-                                        _type:      wit._type{},
-                                    },
-                                },
-                            },
-                            Results: {
-                                {
-                                    Name: "",
-                                    Type: &wit.TypeDef{
-                                        Name: (*string)(nil),
-                                        Kind: &wit.Result{
-                                            OK: &wit.TypeDef{
-                                                Name: (*string)(nil),
-                                                Kind: &wit.Tuple{
-                                                    Types: {
-                                                        wit.U64{},
-                                                        &!%v(DEPTH EXCEEDED),
-                                                    },
-                                                    _typeDefKind: wit._typeDefKind{},
-                                                },
-                                                Owner:      nil,
-                                                Docs:       wit.Docs{},
-                                                _worldItem: wit._worldItem{},
-                                                _type:      wit._type{},
-                                            },
-                                            Err:          nil,
-                                            _typeDefKind: wit._typeDefKind{},
-                                        },
-                                        Owner:      nil,
-                                        Docs:       wit.Docs{},
-                                        _worldItem: wit._worldItem{},
-                                        _type:      wit._type{},
-                                    },
-                                },
-                            },
-                            Docs:       wit.Docs{},
-                            _worldItem: wit._worldItem{},
-                        },
                         "[method]output-stream.splice": &wit.Function{
                             Name: "[method]output-stream.splice",
                             Kind: &wit.Method{
@@ -1744,7 +1625,7 @@
                                     Name: "src",
                                     Type: &wit.TypeDef{
                                         Name: (*string)(nil),
-                                        Kind: &wit.OwnedHandle{
+                                        Kind: &wit.BorrowedHandle{
                                             Type:    &wit.TypeDef{(CYCLIC REFERENCE)},
                                             _handle: wit._handle{},
                                         },
@@ -1765,21 +1646,8 @@
                                     Type: &wit.TypeDef{
                                         Name: (*string)(nil),
                                         Kind: &wit.Result{
-                                            OK: &wit.TypeDef{
-                                                Name: (*string)(nil),
-                                                Kind: &wit.Tuple{
-                                                    Types: {
-                                                        wit.U64{},
-                                                        &!%v(DEPTH EXCEEDED),
-                                                    },
-                                                    _typeDefKind: wit._typeDefKind{},
-                                                },
-                                                Owner:      nil,
-                                                Docs:       wit.Docs{},
-                                                _worldItem: wit._worldItem{},
-                                                _type:      wit._type{},
-                                            },
-                                            Err:          nil,
+                                            OK:           wit.U64{},
+                                            Err:          &wit.TypeDef{(CYCLIC REFERENCE)},
                                             _typeDefKind: wit._typeDefKind{},
                                         },
                                         Owner:      nil,
@@ -1979,8 +1847,65 @@
                             },
                         },
                         Functions: {
-                            "poll-list": &wit.Function{
-                                Name:   "poll-list",
+                            "[method]pollable.block": &wit.Function{
+                                Name: "[method]pollable.block",
+                                Kind: &wit.Method{
+                                    Type:          &wit.TypeDef{(CYCLIC REFERENCE)},
+                                    _functionKind: wit._functionKind{},
+                                },
+                                Params: {
+                                    {
+                                        Name: "self",
+                                        Type: &wit.TypeDef{
+                                            Name: (*string)(nil),
+                                            Kind: &wit.BorrowedHandle{
+                                                Type:    &wit.TypeDef{(CYCLIC REFERENCE)},
+                                                _handle: wit._handle{},
+                                            },
+                                            Owner:      nil,
+                                            Docs:       wit.Docs{},
+                                            _worldItem: wit._worldItem{},
+                                            _type:      wit._type{},
+                                        },
+                                    },
+                                },
+                                Results:    nil,
+                                Docs:       wit.Docs{},
+                                _worldItem: wit._worldItem{},
+                            },
+                            "[method]pollable.ready": &wit.Function{
+                                Name: "[method]pollable.ready",
+                                Kind: &wit.Method{
+                                    Type:          &wit.TypeDef{(CYCLIC REFERENCE)},
+                                    _functionKind: wit._functionKind{},
+                                },
+                                Params: {
+                                    {
+                                        Name: "self",
+                                        Type: &wit.TypeDef{
+                                            Name: (*string)(nil),
+                                            Kind: &wit.BorrowedHandle{
+                                                Type:    &wit.TypeDef{(CYCLIC REFERENCE)},
+                                                _handle: wit._handle{},
+                                            },
+                                            Owner:      nil,
+                                            Docs:       wit.Docs{},
+                                            _worldItem: wit._worldItem{},
+                                            _type:      wit._type{},
+                                        },
+                                    },
+                                },
+                                Results: {
+                                    {
+                                        Name: "",
+                                        Type: wit.Bool{},
+                                    },
+                                },
+                                Docs:       wit.Docs{},
+                                _worldItem: wit._worldItem{},
+                            },
+                            "poll": &wit.Function{
+                                Name:   "poll",
                                 Kind:   &wit.Freestanding{},
                                 Params: {
                                     {
@@ -2017,29 +1942,6 @@
                                 Docs:       wit.Docs{},
                                 _worldItem: wit._worldItem{},
                             },
-                            "poll-one": &wit.Function{
-                                Name:   "poll-one",
-                                Kind:   &wit.Freestanding{},
-                                Params: {
-                                    {
-                                        Name: "in",
-                                        Type: &wit.TypeDef{
-                                            Name: (*string)(nil),
-                                            Kind: &wit.BorrowedHandle{
-                                                Type:    &wit.TypeDef{(CYCLIC REFERENCE)},
-                                                _handle: wit._handle{},
-                                            },
-                                            Owner:      nil,
-                                            Docs:       wit.Docs{},
-                                            _worldItem: wit._worldItem{},
-                                            _type:      wit._type{},
-                                        },
-                                    },
-                                },
-                                Results:    nil,
-                                Docs:       wit.Docs{},
-                                _worldItem: wit._worldItem{},
-                            },
                         },
                         Package:    &wit.Package{(CYCLIC REFERENCE)},
                         Docs:       wit.Docs{},
@@ -2049,6 +1951,14 @@
                     "streams": &wit.Interface{
                         Name:     &"streams",
                         TypeDefs: {
+                            "error": &wit.TypeDef{
+                                Name:       &"error",
+                                Kind:       &wit.Resource{},
+                                Owner:      &wit.Interface{(CYCLIC REFERENCE)},
+                                Docs:       wit.Docs{},
+                                _worldItem: wit._worldItem{},
+                                _type:      wit._type{},
+                            },
                             "input-stream": &wit.TypeDef{
                                 Name:       &"input-stream",
                                 Kind:       &wit.Resource{},
@@ -2073,36 +1983,28 @@
                                 _worldItem: wit._worldItem{},
                                 _type:      wit._type{},
                             },
-                            "stream-status": &wit.TypeDef{
-                                Name: &"stream-status",
-                                Kind: &wit.Enum{
-                                    Cases: {
-                                        {
-                                            Name: "open",
-                                            Docs: wit.Docs{},
-                                        },
-                                        {
-                                            Name: "ended",
-                                            Docs: wit.Docs{},
-                                        },
-                                    },
-                                    _typeDefKind: wit._typeDefKind{},
-                                },
-                                Owner:      &wit.Interface{(CYCLIC REFERENCE)},
-                                Docs:       wit.Docs{},
-                                _worldItem: wit._worldItem{},
-                                _type:      wit._type{},
-                            },
-                            "write-error": &wit.TypeDef{
-                                Name: &"write-error",
-                                Kind: &wit.Enum{
+                            "stream-error": &wit.TypeDef{
+                                Name: &"stream-error",
+                                Kind: &wit.Variant{
                                     Cases: {
                                         {
                                             Name: "last-operation-failed",
+                                            Type: &wit.TypeDef{
+                                                Name: (*string)(nil),
+                                                Kind: &wit.OwnedHandle{
+                                                    Type:    &wit.TypeDef{(CYCLIC REFERENCE)},
+                                                    _handle: wit._handle{},
+                                                },
+                                                Owner:      nil,
+                                                Docs:       wit.Docs{},
+                                                _worldItem: wit._worldItem{},
+                                                _type:      wit._type{},
+                                            },
                                             Docs: wit.Docs{},
                                         },
                                         {
                                             Name: "closed",
+                                            Type: nil,
                                             Docs: wit.Docs{},
                                         },
                                     },
@@ -2115,6 +2017,37 @@
                             },
                         },
                         Functions: {
+                            "[method]error.to-debug-string": &wit.Function{
+                                Name: "[method]error.to-debug-string",
+                                Kind: &wit.Method{
+                                    Type:          &wit.TypeDef{(CYCLIC REFERENCE)},
+                                    _functionKind: wit._functionKind{},
+                                },
+                                Params: {
+                                    {
+                                        Name: "self",
+                                        Type: &wit.TypeDef{
+                                            Name: (*string)(nil),
+                                            Kind: &wit.BorrowedHandle{
+                                                Type:    &wit.TypeDef{(CYCLIC REFERENCE)},
+                                                _handle: wit._handle{},
+                                            },
+                                            Owner:      nil,
+                                            Docs:       wit.Docs{},
+                                            _worldItem: wit._worldItem{},
+                                            _type:      wit._type{},
+                                        },
+                                    },
+                                },
+                                Results: {
+                                    {
+                                        Name: "",
+                                        Type: wit.String{},
+                                    },
+                                },
+                                Docs:       wit.Docs{},
+                                _worldItem: wit._worldItem{},
+                            },
                             "[method]input-stream.blocking-read": &wit.Function{
                                 Name: "[method]input-stream.blocking-read",
                                 Kind: &wit.Method{
@@ -2147,21 +2080,8 @@
                                         Type: &wit.TypeDef{
                                             Name: (*string)(nil),
                                             Kind: &wit.Result{
-                                                OK: &wit.TypeDef{
-                                                    Name: (*string)(nil),
-                                                    Kind: &wit.Tuple{
-                                                        Types: {
-                                                            &!%v(DEPTH EXCEEDED),
-                                                            &!%v(DEPTH EXCEEDED),
-                                                        },
-                                                        _typeDefKind: wit._typeDefKind{},
-                                                    },
-                                                    Owner:      nil,
-                                                    Docs:       wit.Docs{},
-                                                    _worldItem: wit._worldItem{},
-                                                    _type:      wit._type{},
-                                                },
-                                                Err:          nil,
+                                                OK:           &wit.TypeDef{(CYCLIC REFERENCE)},
+                                                Err:          &wit.TypeDef{(CYCLIC REFERENCE)},
                                                 _typeDefKind: wit._typeDefKind{},
                                             },
                                             Owner:      nil,
@@ -2206,21 +2126,8 @@
                                         Type: &wit.TypeDef{
                                             Name: (*string)(nil),
                                             Kind: &wit.Result{
-                                                OK: &wit.TypeDef{
-                                                    Name: (*string)(nil),
-                                                    Kind: &wit.Tuple{
-                                                        Types: {
-                                                            wit.U64{},
-                                                            &!%v(DEPTH EXCEEDED),
-                                                        },
-                                                        _typeDefKind: wit._typeDefKind{},
-                                                    },
-                                                    Owner:      nil,
-                                                    Docs:       wit.Docs{},
-                                                    _worldItem: wit._worldItem{},
-                                                    _type:      wit._type{},
-                                                },
-                                                Err:          nil,
+                                                OK:           wit.U64{},
+                                                Err:          &wit.TypeDef{(CYCLIC REFERENCE)},
                                                 _typeDefKind: wit._typeDefKind{},
                                             },
                                             Owner:      nil,
@@ -2265,21 +2172,8 @@
                                         Type: &wit.TypeDef{
                                             Name: (*string)(nil),
                                             Kind: &wit.Result{
-                                                OK: &wit.TypeDef{
-                                                    Name: (*string)(nil),
-                                                    Kind: &wit.Tuple{
-                                                        Types: {
-                                                            &!%v(DEPTH EXCEEDED),
-                                                            &!%v(DEPTH EXCEEDED),
-                                                        },
-                                                        _typeDefKind: wit._typeDefKind{},
-                                                    },
-                                                    Owner:      nil,
-                                                    Docs:       wit.Docs{},
-                                                    _worldItem: wit._worldItem{},
-                                                    _type:      wit._type{},
-                                                },
-                                                Err:          nil,
+                                                OK:           &wit.TypeDef{(CYCLIC REFERENCE)},
+                                                Err:          &wit.TypeDef{(CYCLIC REFERENCE)},
                                                 _typeDefKind: wit._typeDefKind{},
                                             },
                                             Owner:      nil,
@@ -2324,21 +2218,8 @@
                                         Type: &wit.TypeDef{
                                             Name: (*string)(nil),
                                             Kind: &wit.Result{
-                                                OK: &wit.TypeDef{
-                                                    Name: (*string)(nil),
-                                                    Kind: &wit.Tuple{
-                                                        Types: {
-                                                            wit.U64{},
-                                                            &!%v(DEPTH EXCEEDED),
-                                                        },
-                                                        _typeDefKind: wit._typeDefKind{},
-                                                    },
-                                                    Owner:      nil,
-                                                    Docs:       wit.Docs{},
-                                                    _worldItem: wit._worldItem{},
-                                                    _type:      wit._type{},
-                                                },
-                                                Err:          nil,
+                                                OK:           wit.U64{},
+                                                Err:          &wit.TypeDef{(CYCLIC REFERENCE)},
                                                 _typeDefKind: wit._typeDefKind{},
                                             },
                                             Owner:      nil,
@@ -2459,7 +2340,7 @@
                                         Name: "src",
                                         Type: &wit.TypeDef{
                                             Name: (*string)(nil),
-                                            Kind: &wit.OwnedHandle{
+                                            Kind: &wit.BorrowedHandle{
                                                 Type:    &wit.TypeDef{(CYCLIC REFERENCE)},
                                                 _handle: wit._handle{},
                                             },
@@ -2480,21 +2361,8 @@
                                         Type: &wit.TypeDef{
                                             Name: (*string)(nil),
                                             Kind: &wit.Result{
-                                                OK: &wit.TypeDef{
-                                                    Name: (*string)(nil),
-                                                    Kind: &wit.Tuple{
-                                                        Types: {
-                                                            wit.U64{},
-                                                            &!%v(DEPTH EXCEEDED),
-                                                        },
-                                                        _typeDefKind: wit._typeDefKind{},
-                                                    },
-                                                    Owner:      nil,
-                                                    Docs:       wit.Docs{},
-                                                    _worldItem: wit._worldItem{},
-                                                    _type:      wit._type{},
-                                                },
-                                                Err:          nil,
+                                                OK:           wit.U64{},
+                                                Err:          &wit.TypeDef{(CYCLIC REFERENCE)},
                                                 _typeDefKind: wit._typeDefKind{},
                                             },
                                             Owner:      nil,
@@ -2693,75 +2561,6 @@
                                 Docs:       wit.Docs{},
                                 _worldItem: wit._worldItem{},
                             },
-                            "[method]output-stream.forward": &wit.Function{
-                                Name: "[method]output-stream.forward",
-                                Kind: &wit.Method{
-                                    Type:          &wit.TypeDef{(CYCLIC REFERENCE)},
-                                    _functionKind: wit._functionKind{},
-                                },
-                                Params: {
-                                    {
-                                        Name: "self",
-                                        Type: &wit.TypeDef{
-                                            Name: (*string)(nil),
-                                            Kind: &wit.BorrowedHandle{
-                                                Type:    &wit.TypeDef{(CYCLIC REFERENCE)},
-                                                _handle: wit._handle{},
-                                            },
-                                            Owner:      nil,
-                                            Docs:       wit.Docs{},
-                                            _worldItem: wit._worldItem{},
-                                            _type:      wit._type{},
-                                        },
-                                    },
-                                    {
-                                        Name: "src",
-                                        Type: &wit.TypeDef{
-                                            Name: (*string)(nil),
-                                            Kind: &wit.OwnedHandle{
-                                                Type:    &wit.TypeDef{(CYCLIC REFERENCE)},
-                                                _handle: wit._handle{},
-                                            },
-                                            Owner:      nil,
-                                            Docs:       wit.Docs{},
-                                            _worldItem: wit._worldItem{},
-                                            _type:      wit._type{},
-                                        },
-                                    },
-                                },
-                                Results: {
-                                    {
-                                        Name: "",
-                                        Type: &wit.TypeDef{
-                                            Name: (*string)(nil),
-                                            Kind: &wit.Result{
-                                                OK: &wit.TypeDef{
-                                                    Name: (*string)(nil),
-                                                    Kind: &wit.Tuple{
-                                                        Types: {
-                                                            wit.U64{},
-                                                            &!%v(DEPTH EXCEEDED),
-                                                        },
-                                                        _typeDefKind: wit._typeDefKind{},
-                                                    },
-                                                    Owner:      nil,
-                                                    Docs:       wit.Docs{},
-                                                    _worldItem: wit._worldItem{},
-                                                    _type:      wit._type{},
-                                                },
-                                                Err:          nil,
-                                                _typeDefKind: wit._typeDefKind{},
-                                            },
-                                            Owner:      nil,
-                                            Docs:       wit.Docs{},
-                                            _worldItem: wit._worldItem{},
-                                            _type:      wit._type{},
-                                        },
-                                    },
-                                },
-                                Docs:       wit.Docs{},
-                                _worldItem: wit._worldItem{},
-                            },
                             "[method]output-stream.splice": &wit.Function{
                                 Name: "[method]output-stream.splice",
                                 Kind: &wit.Method{
@@ -2787,7 +2586,7 @@
                                         Name: "src",
                                         Type: &wit.TypeDef{
                                             Name: (*string)(nil),
-                                            Kind: &wit.OwnedHandle{
+                                            Kind: &wit.BorrowedHandle{
                                                 Type:    &wit.TypeDef{(CYCLIC REFERENCE)},
                                                 _handle: wit._handle{},
                                             },
@@ -2808,21 +2607,8 @@
                                         Type: &wit.TypeDef{
                                             Name: (*string)(nil),
                                             Kind: &wit.Result{
-                                                OK: &wit.TypeDef{
-                                                    Name: (*string)(nil),
-                                                    Kind: &wit.Tuple{
-                                                        Types: {
-                                                            wit.U64{},
-                                                            &!%v(DEPTH EXCEEDED),
-                                                        },
-                                                        _typeDefKind: wit._typeDefKind{},
-                                                    },
-                                                    Owner:      nil,
-                                                    Docs:       wit.Docs{},
-                                                    _worldItem: wit._worldItem{},
-                                                    _type:      wit._type{},
-                                                },
-                                                Err:          nil,
+                                                OK:           wit.U64{},
+                                                Err:          &wit.TypeDef{(CYCLIC REFERENCE)},
                                                 _typeDefKind: wit._typeDefKind{},
                                             },
                                             Owner:      nil,
@@ -3009,8 +2795,65 @@
                         },
                     },
                     Functions: {
-                        "poll-list": &wit.Function{
-                            Name:   "poll-list",
+                        "[method]pollable.block": &wit.Function{
+                            Name: "[method]pollable.block",
+                            Kind: &wit.Method{
+                                Type:          &wit.TypeDef{(CYCLIC REFERENCE)},
+                                _functionKind: wit._functionKind{},
+                            },
+                            Params: {
+                                {
+                                    Name: "self",
+                                    Type: &wit.TypeDef{
+                                        Name: (*string)(nil),
+                                        Kind: &wit.BorrowedHandle{
+                                            Type:    &wit.TypeDef{(CYCLIC REFERENCE)},
+                                            _handle: wit._handle{},
+                                        },
+                                        Owner:      nil,
+                                        Docs:       wit.Docs{},
+                                        _worldItem: wit._worldItem{},
+                                        _type:      wit._type{},
+                                    },
+                                },
+                            },
+                            Results:    nil,
+                            Docs:       wit.Docs{},
+                            _worldItem: wit._worldItem{},
+                        },
+                        "[method]pollable.ready": &wit.Function{
+                            Name: "[method]pollable.ready",
+                            Kind: &wit.Method{
+                                Type:          &wit.TypeDef{(CYCLIC REFERENCE)},
+                                _functionKind: wit._functionKind{},
+                            },
+                            Params: {
+                                {
+                                    Name: "self",
+                                    Type: &wit.TypeDef{
+                                        Name: (*string)(nil),
+                                        Kind: &wit.BorrowedHandle{
+                                            Type:    &wit.TypeDef{(CYCLIC REFERENCE)},
+                                            _handle: wit._handle{},
+                                        },
+                                        Owner:      nil,
+                                        Docs:       wit.Docs{},
+                                        _worldItem: wit._worldItem{},
+                                        _type:      wit._type{},
+                                    },
+                                },
+                            },
+                            Results: {
+                                {
+                                    Name: "",
+                                    Type: wit.Bool{},
+                                },
+                            },
+                            Docs:       wit.Docs{},
+                            _worldItem: wit._worldItem{},
+                        },
+                        "poll": &wit.Function{
+                            Name:   "poll",
                             Kind:   &wit.Freestanding{},
                             Params: {
                                 {
@@ -3047,29 +2890,6 @@
                             Docs:       wit.Docs{},
                             _worldItem: wit._worldItem{},
                         },
-                        "poll-one": &wit.Function{
-                            Name:   "poll-one",
-                            Kind:   &wit.Freestanding{},
-                            Params: {
-                                {
-                                    Name: "in",
-                                    Type: &wit.TypeDef{
-                                        Name: (*string)(nil),
-                                        Kind: &wit.BorrowedHandle{
-                                            Type:    &wit.TypeDef{(CYCLIC REFERENCE)},
-                                            _handle: wit._handle{},
-                                        },
-                                        Owner:      nil,
-                                        Docs:       wit.Docs{},
-                                        _worldItem: wit._worldItem{},
-                                        _type:      wit._type{},
-                                    },
-                                },
-                            },
-                            Results:    nil,
-                            Docs:       wit.Docs{},
-                            _worldItem: wit._worldItem{},
-                        },
                     },
                     Package:    &wit.Package{(CYCLIC REFERENCE)},
                     Docs:       wit.Docs{},
@@ -3079,6 +2899,14 @@
                 "interface-2": &wit.Interface{
                     Name:     &"monotonic-clock",
                     TypeDefs: {
+                        "duration": &wit.TypeDef{
+                            Name:       &"duration",
+                            Kind:       wit.U64{},
+                            Owner:      &wit.Interface{(CYCLIC REFERENCE)},
+                            Docs:       wit.Docs{},
+                            _worldItem: wit._worldItem{},
+                            _type:      wit._type{},
+                        },
                         "instant": &wit.TypeDef{
                             Name:       &"instant",
                             Kind:       wit.U64{},
@@ -3123,17 +2951,41 @@
                             Docs:       wit.Docs{},
                             _worldItem: wit._worldItem{},
                         },
-                        "subscribe": &wit.Function{
-                            Name:   "subscribe",
+                        "subscribe-duration": &wit.Function{
+                            Name:   "subscribe-duration",
                             Kind:   &wit.Freestanding{},
                             Params: {
                                 {
                                     Name: "when",
                                     Type: &wit.TypeDef{(CYCLIC REFERENCE)},
                                 },
+                            },
+                            Results: {
                                 {
-                                    Name: "absolute",
-                                    Type: wit.Bool{},
+                                    Name: "",
+                                    Type: &wit.TypeDef{
+                                        Name: (*string)(nil),
+                                        Kind: &wit.OwnedHandle{
+                                            Type:    &wit.TypeDef{(CYCLIC REFERENCE)},
+                                            _handle: wit._handle{},
+                                        },
+                                        Owner:      nil,
+                                        Docs:       wit.Docs{},
+                                        _worldItem: wit._worldItem{},
+                                        _type:      wit._type{},
+                                    },
+                                },
+                            },
+                            Docs:       wit.Docs{},
+                            _worldItem: wit._worldItem{},
+                        },
+                        "subscribe-instant": &wit.Function{
+                            Name:   "subscribe-instant",
+                            Kind:   &wit.Freestanding{},
+                            Params: {
+                                {
+                                    Name: "when",
+                                    Type: &wit.TypeDef{(CYCLIC REFERENCE)},
                                 },
                             },
                             Results: {
@@ -3641,6 +3493,14 @@
                     "monotonic-clock": &wit.Interface{
                         Name:     &"monotonic-clock",
                         TypeDefs: {
+                            "duration": &wit.TypeDef{
+                                Name:       &"duration",
+                                Kind:       wit.U64{},
+                                Owner:      &wit.Interface{(CYCLIC REFERENCE)},
+                                Docs:       wit.Docs{},
+                                _worldItem: wit._worldItem{},
+                                _type:      wit._type{},
+                            },
                             "instant": &wit.TypeDef{
                                 Name:       &"instant",
                                 Kind:       wit.U64{},
@@ -3685,17 +3545,41 @@
                                 Docs:       wit.Docs{},
                                 _worldItem: wit._worldItem{},
                             },
-                            "subscribe": &wit.Function{
-                                Name:   "subscribe",
+                            "subscribe-duration": &wit.Function{
+                                Name:   "subscribe-duration",
                                 Kind:   &wit.Freestanding{},
                                 Params: {
                                     {
                                         Name: "when",
                                         Type: &wit.TypeDef{(CYCLIC REFERENCE)},
                                     },
+                                },
+                                Results: {
                                     {
-                                        Name: "absolute",
-                                        Type: wit.Bool{},
+                                        Name: "",
+                                        Type: &wit.TypeDef{
+                                            Name: (*string)(nil),
+                                            Kind: &wit.OwnedHandle{
+                                                Type:    &wit.TypeDef{(CYCLIC REFERENCE)},
+                                                _handle: wit._handle{},
+                                            },
+                                            Owner:      nil,
+                                            Docs:       wit.Docs{},
+                                            _worldItem: wit._worldItem{},
+                                            _type:      wit._type{},
+                                        },
+                                    },
+                                },
+                                Docs:       wit.Docs{},
+                                _worldItem: wit._worldItem{},
+                            },
+                            "subscribe-instant": &wit.Function{
+                                Name:   "subscribe-instant",
+                                Kind:   &wit.Freestanding{},
+                                Params: {
+                                    {
+                                        Name: "when",
+                                        Type: &wit.TypeDef{(CYCLIC REFERENCE)},
                                     },
                                 },
                                 Results: {
@@ -3888,8 +3772,65 @@
                 },
             },
             Functions: {
-                "poll-list": &wit.Function{
-                    Name:   "poll-list",
+                "[method]pollable.block": &wit.Function{
+                    Name: "[method]pollable.block",
+                    Kind: &wit.Method{
+                        Type:          &wit.TypeDef{(CYCLIC REFERENCE)},
+                        _functionKind: wit._functionKind{},
+                    },
+                    Params: {
+                        {
+                            Name: "self",
+                            Type: &wit.TypeDef{
+                                Name: (*string)(nil),
+                                Kind: &wit.BorrowedHandle{
+                                    Type:    &wit.TypeDef{(CYCLIC REFERENCE)},
+                                    _handle: wit._handle{},
+                                },
+                                Owner:      nil,
+                                Docs:       wit.Docs{},
+                                _worldItem: wit._worldItem{},
+                                _type:      wit._type{},
+                            },
+                        },
+                    },
+                    Results:    nil,
+                    Docs:       wit.Docs{},
+                    _worldItem: wit._worldItem{},
+                },
+                "[method]pollable.ready": &wit.Function{
+                    Name: "[method]pollable.ready",
+                    Kind: &wit.Method{
+                        Type:          &wit.TypeDef{(CYCLIC REFERENCE)},
+                        _functionKind: wit._functionKind{},
+                    },
+                    Params: {
+                        {
+                            Name: "self",
+                            Type: &wit.TypeDef{
+                                Name: (*string)(nil),
+                                Kind: &wit.BorrowedHandle{
+                                    Type:    &wit.TypeDef{(CYCLIC REFERENCE)},
+                                    _handle: wit._handle{},
+                                },
+                                Owner:      nil,
+                                Docs:       wit.Docs{},
+                                _worldItem: wit._worldItem{},
+                                _type:      wit._type{},
+                            },
+                        },
+                    },
+                    Results: {
+                        {
+                            Name: "",
+                            Type: wit.Bool{},
+                        },
+                    },
+                    Docs:       wit.Docs{},
+                    _worldItem: wit._worldItem{},
+                },
+                "poll": &wit.Function{
+                    Name:   "poll",
                     Kind:   &wit.Freestanding{},
                     Params: {
                         {
@@ -3897,17 +3838,7 @@
                             Type: &wit.TypeDef{
                                 Name: (*string)(nil),
                                 Kind: &wit.List{
-                                    Type: &wit.TypeDef{
-                                        Name: (*string)(nil),
-                                        Kind: &wit.BorrowedHandle{
-                                            Type:    &wit.TypeDef{(CYCLIC REFERENCE)},
-                                            _handle: wit._handle{},
-                                        },
-                                        Owner:      nil,
-                                        Docs:       wit.Docs{},
-                                        _worldItem: wit._worldItem{},
-                                        _type:      wit._type{},
-                                    },
+                                    Type:         &wit.TypeDef{(CYCLIC REFERENCE)},
                                     _typeDefKind: wit._typeDefKind{},
                                 },
                                 Owner:      nil,
@@ -3936,29 +3867,6 @@
                     Docs:       wit.Docs{},
                     _worldItem: wit._worldItem{},
                 },
-                "poll-one": &wit.Function{
-                    Name:   "poll-one",
-                    Kind:   &wit.Freestanding{},
-                    Params: {
-                        {
-                            Name: "in",
-                            Type: &wit.TypeDef{
-                                Name: (*string)(nil),
-                                Kind: &wit.BorrowedHandle{
-                                    Type:    &wit.TypeDef{(CYCLIC REFERENCE)},
-                                    _handle: wit._handle{},
-                                },
-                                Owner:      nil,
-                                Docs:       wit.Docs{},
-                                _worldItem: wit._worldItem{},
-                                _type:      wit._type{},
-                            },
-                        },
-                    },
-                    Results:    nil,
-                    Docs:       wit.Docs{},
-                    _worldItem: wit._worldItem{},
-                },
             },
             Package: &wit.Package{
                 Name: wit.PackageName{
@@ -3972,6 +3880,14 @@
                     "streams": &wit.Interface{
                         Name:     &"streams",
                         TypeDefs: {
+                            "error": &wit.TypeDef{
+                                Name:       &"error",
+                                Kind:       &wit.Resource{(CYCLIC REFERENCE)},
+                                Owner:      &wit.Interface{(CYCLIC REFERENCE)},
+                                Docs:       wit.Docs{},
+                                _worldItem: wit._worldItem{},
+                                _type:      wit._type{},
+                            },
                             "input-stream": &wit.TypeDef{
                                 Name:       &"input-stream",
                                 Kind:       &wit.Resource{(CYCLIC REFERENCE)},
@@ -3996,36 +3912,28 @@
                                 _worldItem: wit._worldItem{},
                                 _type:      wit._type{},
                             },
-                            "stream-status": &wit.TypeDef{
-                                Name: &"stream-status",
-                                Kind: &wit.Enum{
-                                    Cases: {
-                                        {
-                                            Name: "open",
-                                            Docs: wit.Docs{},
-                                        },
-                                        {
-                                            Name: "ended",
-                                            Docs: wit.Docs{},
-                                        },
-                                    },
-                                    _typeDefKind: wit._typeDefKind{},
-                                },
-                                Owner:      &wit.Interface{(CYCLIC REFERENCE)},
-                                Docs:       wit.Docs{},
-                                _worldItem: wit._worldItem{},
-                                _type:      wit._type{},
-                            },
-                            "write-error": &wit.TypeDef{
-                                Name: &"write-error",
-                                Kind: &wit.Enum{
+                            "stream-error": &wit.TypeDef{
+                                Name: &"stream-error",
+                                Kind: &wit.Variant{
                                     Cases: {
                                         {
                                             Name: "last-operation-failed",
+                                            Type: &wit.TypeDef{
+                                                Name: (*string)(nil),
+                                                Kind: &wit.OwnedHandle{
+                                                    Type:    &wit.TypeDef{(CYCLIC REFERENCE)},
+                                                    _handle: wit._handle{},
+                                                },
+                                                Owner:      nil,
+                                                Docs:       wit.Docs{},
+                                                _worldItem: wit._worldItem{},
+                                                _type:      wit._type{},
+                                            },
                                             Docs: wit.Docs{},
                                         },
                                         {
                                             Name: "closed",
+                                            Type: nil,
                                             Docs: wit.Docs{},
                                         },
                                     },
@@ -4038,6 +3946,37 @@
                             },
                         },
                         Functions: {
+                            "[method]error.to-debug-string": &wit.Function{
+                                Name: "[method]error.to-debug-string",
+                                Kind: &wit.Method{
+                                    Type:          &wit.TypeDef{(CYCLIC REFERENCE)},
+                                    _functionKind: wit._functionKind{},
+                                },
+                                Params: {
+                                    {
+                                        Name: "self",
+                                        Type: &wit.TypeDef{
+                                            Name: (*string)(nil),
+                                            Kind: &wit.BorrowedHandle{
+                                                Type:    &wit.TypeDef{(CYCLIC REFERENCE)},
+                                                _handle: wit._handle{},
+                                            },
+                                            Owner:      nil,
+                                            Docs:       wit.Docs{},
+                                            _worldItem: wit._worldItem{},
+                                            _type:      wit._type{},
+                                        },
+                                    },
+                                },
+                                Results: {
+                                    {
+                                        Name: "",
+                                        Type: wit.String{},
+                                    },
+                                },
+                                Docs:       wit.Docs{},
+                                _worldItem: wit._worldItem{},
+                            },
                             "[method]input-stream.blocking-read": &wit.Function{
                                 Name: "[method]input-stream.blocking-read",
                                 Kind: &wit.Method{
@@ -4070,21 +4009,8 @@
                                         Type: &wit.TypeDef{
                                             Name: (*string)(nil),
                                             Kind: &wit.Result{
-                                                OK: &wit.TypeDef{
-                                                    Name: (*string)(nil),
-                                                    Kind: &wit.Tuple{
-                                                        Types: {
-                                                            &!%v(DEPTH EXCEEDED),
-                                                            &!%v(DEPTH EXCEEDED),
-                                                        },
-                                                        _typeDefKind: wit._typeDefKind{},
-                                                    },
-                                                    Owner:      nil,
-                                                    Docs:       wit.Docs{},
-                                                    _worldItem: wit._worldItem{},
-                                                    _type:      wit._type{},
-                                                },
-                                                Err:          nil,
+                                                OK:           &wit.TypeDef{(CYCLIC REFERENCE)},
+                                                Err:          &wit.TypeDef{(CYCLIC REFERENCE)},
                                                 _typeDefKind: wit._typeDefKind{},
                                             },
                                             Owner:      nil,
@@ -4129,21 +4055,8 @@
                                         Type: &wit.TypeDef{
                                             Name: (*string)(nil),
                                             Kind: &wit.Result{
-                                                OK: &wit.TypeDef{
-                                                    Name: (*string)(nil),
-                                                    Kind: &wit.Tuple{
-                                                        Types: {
-                                                            wit.U64{},
-                                                            &!%v(DEPTH EXCEEDED),
-                                                        },
-                                                        _typeDefKind: wit._typeDefKind{},
-                                                    },
-                                                    Owner:      nil,
-                                                    Docs:       wit.Docs{},
-                                                    _worldItem: wit._worldItem{},
-                                                    _type:      wit._type{},
-                                                },
-                                                Err:          nil,
+                                                OK:           wit.U64{},
+                                                Err:          &wit.TypeDef{(CYCLIC REFERENCE)},
                                                 _typeDefKind: wit._typeDefKind{},
                                             },
                                             Owner:      nil,
@@ -4188,21 +4101,8 @@
                                         Type: &wit.TypeDef{
                                             Name: (*string)(nil),
                                             Kind: &wit.Result{
-                                                OK: &wit.TypeDef{
-                                                    Name: (*string)(nil),
-                                                    Kind: &wit.Tuple{
-                                                        Types: {
-                                                            &!%v(DEPTH EXCEEDED),
-                                                            &!%v(DEPTH EXCEEDED),
-                                                        },
-                                                        _typeDefKind: wit._typeDefKind{},
-                                                    },
-                                                    Owner:      nil,
-                                                    Docs:       wit.Docs{},
-                                                    _worldItem: wit._worldItem{},
-                                                    _type:      wit._type{},
-                                                },
-                                                Err:          nil,
+                                                OK:           &wit.TypeDef{(CYCLIC REFERENCE)},
+                                                Err:          &wit.TypeDef{(CYCLIC REFERENCE)},
                                                 _typeDefKind: wit._typeDefKind{},
                                             },
                                             Owner:      nil,
@@ -4247,21 +4147,8 @@
                                         Type: &wit.TypeDef{
                                             Name: (*string)(nil),
                                             Kind: &wit.Result{
-                                                OK: &wit.TypeDef{
-                                                    Name: (*string)(nil),
-                                                    Kind: &wit.Tuple{
-                                                        Types: {
-                                                            wit.U64{},
-                                                            &!%v(DEPTH EXCEEDED),
-                                                        },
-                                                        _typeDefKind: wit._typeDefKind{},
-                                                    },
-                                                    Owner:      nil,
-                                                    Docs:       wit.Docs{},
-                                                    _worldItem: wit._worldItem{},
-                                                    _type:      wit._type{},
-                                                },
-                                                Err:          nil,
+                                                OK:           wit.U64{},
+                                                Err:          &wit.TypeDef{(CYCLIC REFERENCE)},
                                                 _typeDefKind: wit._typeDefKind{},
                                             },
                                             Owner:      nil,
@@ -4382,7 +4269,7 @@
                                         Name: "src",
                                         Type: &wit.TypeDef{
                                             Name: (*string)(nil),
-                                            Kind: &wit.OwnedHandle{
+                                            Kind: &wit.BorrowedHandle{
                                                 Type:    &wit.TypeDef{(CYCLIC REFERENCE)},
                                                 _handle: wit._handle{},
                                             },
@@ -4403,21 +4290,8 @@
                                         Type: &wit.TypeDef{
                                             Name: (*string)(nil),
                                             Kind: &wit.Result{
-                                                OK: &wit.TypeDef{
-                                                    Name: (*string)(nil),
-                                                    Kind: &wit.Tuple{
-                                                        Types: {
-                                                            wit.U64{},
-                                                            &!%v(DEPTH EXCEEDED),
-                                                        },
-                                                        _typeDefKind: wit._typeDefKind{},
-                                                    },
-                                                    Owner:      nil,
-                                                    Docs:       wit.Docs{},
-                                                    _worldItem: wit._worldItem{},
-                                                    _type:      wit._type{},
-                                                },
-                                                Err:          nil,
+                                                OK:           wit.U64{},
+                                                Err:          &wit.TypeDef{(CYCLIC REFERENCE)},
                                                 _typeDefKind: wit._typeDefKind{},
                                             },
                                             Owner:      nil,
@@ -4616,75 +4490,6 @@
                                 Docs:       wit.Docs{},
                                 _worldItem: wit._worldItem{},
                             },
-                            "[method]output-stream.forward": &wit.Function{
-                                Name: "[method]output-stream.forward",
-                                Kind: &wit.Method{
-                                    Type:          &wit.TypeDef{(CYCLIC REFERENCE)},
-                                    _functionKind: wit._functionKind{},
-                                },
-                                Params: {
-                                    {
-                                        Name: "self",
-                                        Type: &wit.TypeDef{
-                                            Name: (*string)(nil),
-                                            Kind: &wit.BorrowedHandle{
-                                                Type:    &wit.TypeDef{(CYCLIC REFERENCE)},
-                                                _handle: wit._handle{},
-                                            },
-                                            Owner:      nil,
-                                            Docs:       wit.Docs{},
-                                            _worldItem: wit._worldItem{},
-                                            _type:      wit._type{},
-                                        },
-                                    },
-                                    {
-                                        Name: "src",
-                                        Type: &wit.TypeDef{
-                                            Name: (*string)(nil),
-                                            Kind: &wit.OwnedHandle{
-                                                Type:    &wit.TypeDef{(CYCLIC REFERENCE)},
-                                                _handle: wit._handle{},
-                                            },
-                                            Owner:      nil,
-                                            Docs:       wit.Docs{},
-                                            _worldItem: wit._worldItem{},
-                                            _type:      wit._type{},
-                                        },
-                                    },
-                                },
-                                Results: {
-                                    {
-                                        Name: "",
-                                        Type: &wit.TypeDef{
-                                            Name: (*string)(nil),
-                                            Kind: &wit.Result{
-                                                OK: &wit.TypeDef{
-                                                    Name: (*string)(nil),
-                                                    Kind: &wit.Tuple{
-                                                        Types: {
-                                                            wit.U64{},
-                                                            &!%v(DEPTH EXCEEDED),
-                                                        },
-                                                        _typeDefKind: wit._typeDefKind{},
-                                                    },
-                                                    Owner:      nil,
-                                                    Docs:       wit.Docs{},
-                                                    _worldItem: wit._worldItem{},
-                                                    _type:      wit._type{},
-                                                },
-                                                Err:          nil,
-                                                _typeDefKind: wit._typeDefKind{},
-                                            },
-                                            Owner:      nil,
-                                            Docs:       wit.Docs{},
-                                            _worldItem: wit._worldItem{},
-                                            _type:      wit._type{},
-                                        },
-                                    },
-                                },
-                                Docs:       wit.Docs{},
-                                _worldItem: wit._worldItem{},
-                            },
                             "[method]output-stream.splice": &wit.Function{
                                 Name: "[method]output-stream.splice",
                                 Kind: &wit.Method{
@@ -4710,7 +4515,7 @@
                                         Name: "src",
                                         Type: &wit.TypeDef{
                                             Name: (*string)(nil),
-                                            Kind: &wit.OwnedHandle{
+                                            Kind: &wit.BorrowedHandle{
                                                 Type:    &wit.TypeDef{(CYCLIC REFERENCE)},
                                                 _handle: wit._handle{},
                                             },
@@ -4731,21 +4536,8 @@
                                         Type: &wit.TypeDef{
                                             Name: (*string)(nil),
                                             Kind: &wit.Result{
-                                                OK: &wit.TypeDef{
-                                                    Name: (*string)(nil),
-                                                    Kind: &wit.Tuple{
-                                                        Types: {
-                                                            wit.U64{},
-                                                            &!%v(DEPTH EXCEEDED),
-                                                        },
-                                                        _typeDefKind: wit._typeDefKind{},
-                                                    },
-                                                    Owner:      nil,
-                                                    Docs:       wit.Docs{},
-                                                    _worldItem: wit._worldItem{},
-                                                    _type:      wit._type{},
-                                                },
-                                                Err:          nil,
+                                                OK:           wit.U64{},
+                                                Err:          &wit.TypeDef{(CYCLIC REFERENCE)},
                                                 _typeDefKind: wit._typeDefKind{},
                                             },
                                             Owner:      nil,
@@ -4920,6 +4712,14 @@
         &wit.Interface{
             Name:     &"streams",
             TypeDefs: {
+                "error": &wit.TypeDef{
+                    Name:       &"error",
+                    Kind:       &wit.Resource{},
+                    Owner:      &wit.Interface{(CYCLIC REFERENCE)},
+                    Docs:       wit.Docs{},
+                    _worldItem: wit._worldItem{},
+                    _type:      wit._type{},
+                },
                 "input-stream": &wit.TypeDef{
                     Name:       &"input-stream",
                     Kind:       &wit.Resource{},
@@ -4944,36 +4744,28 @@
                     _worldItem: wit._worldItem{},
                     _type:      wit._type{},
                 },
-                "stream-status": &wit.TypeDef{
-                    Name: &"stream-status",
-                    Kind: &wit.Enum{
-                        Cases: {
-                            {
-                                Name: "open",
-                                Docs: wit.Docs{},
-                            },
-                            {
-                                Name: "ended",
-                                Docs: wit.Docs{},
-                            },
-                        },
-                        _typeDefKind: wit._typeDefKind{},
-                    },
-                    Owner:      &wit.Interface{(CYCLIC REFERENCE)},
-                    Docs:       wit.Docs{},
-                    _worldItem: wit._worldItem{},
-                    _type:      wit._type{},
-                },
-                "write-error": &wit.TypeDef{
-                    Name: &"write-error",
-                    Kind: &wit.Enum{
+                "stream-error": &wit.TypeDef{
+                    Name: &"stream-error",
+                    Kind: &wit.Variant{
                         Cases: {
                             {
                                 Name: "last-operation-failed",
+                                Type: &wit.TypeDef{
+                                    Name: (*string)(nil),
+                                    Kind: &wit.OwnedHandle{
+                                        Type:    &wit.TypeDef{(CYCLIC REFERENCE)},
+                                        _handle: wit._handle{},
+                                    },
+                                    Owner:      nil,
+                                    Docs:       wit.Docs{},
+                                    _worldItem: wit._worldItem{},
+                                    _type:      wit._type{},
+                                },
                                 Docs: wit.Docs{},
                             },
                             {
                                 Name: "closed",
+                                Type: nil,
                                 Docs: wit.Docs{},
                             },
                         },
@@ -4986,6 +4778,37 @@
                 },
             },
             Functions: {
+                "[method]error.to-debug-string": &wit.Function{
+                    Name: "[method]error.to-debug-string",
+                    Kind: &wit.Method{
+                        Type:          &wit.TypeDef{(CYCLIC REFERENCE)},
+                        _functionKind: wit._functionKind{},
+                    },
+                    Params: {
+                        {
+                            Name: "self",
+                            Type: &wit.TypeDef{
+                                Name: (*string)(nil),
+                                Kind: &wit.BorrowedHandle{
+                                    Type:    &wit.TypeDef{(CYCLIC REFERENCE)},
+                                    _handle: wit._handle{},
+                                },
+                                Owner:      nil,
+                                Docs:       wit.Docs{},
+                                _worldItem: wit._worldItem{},
+                                _type:      wit._type{},
+                            },
+                        },
+                    },
+                    Results: {
+                        {
+                            Name: "",
+                            Type: wit.String{},
+                        },
+                    },
+                    Docs:       wit.Docs{},
+                    _worldItem: wit._worldItem{},
+                },
                 "[method]input-stream.blocking-read": &wit.Function{
                     Name: "[method]input-stream.blocking-read",
                     Kind: &wit.Method{
@@ -5020,11 +4843,8 @@
                                 Kind: &wit.Result{
                                     OK: &wit.TypeDef{
                                         Name: (*string)(nil),
-                                        Kind: &wit.Tuple{
-                                            Types: {
-                                                &wit.TypeDef{(CYCLIC REFERENCE)},
-                                                &wit.TypeDef{(CYCLIC REFERENCE)},
-                                            },
+                                        Kind: &wit.List{
+                                            Type:         wit.U8{},
                                             _typeDefKind: wit._typeDefKind{},
                                         },
                                         Owner:      nil,
@@ -5032,7 +4852,7 @@
                                         _worldItem: wit._worldItem{},
                                         _type:      wit._type{},
                                     },
-                                    Err:          nil,
+                                    Err:          &wit.TypeDef{(CYCLIC REFERENCE)},
                                     _typeDefKind: wit._typeDefKind{},
                                 },
                                 Owner:      nil,
@@ -5077,21 +4897,8 @@
                             Type: &wit.TypeDef{
                                 Name: (*string)(nil),
                                 Kind: &wit.Result{
-                                    OK: &wit.TypeDef{
-                                        Name: (*string)(nil),
-                                        Kind: &wit.Tuple{
-                                            Types: {
-                                                wit.U64{},
-                                                &wit.TypeDef{(CYCLIC REFERENCE)},
-                                            },
-                                            _typeDefKind: wit._typeDefKind{},
-                                        },
-                                        Owner:      nil,
-                                        Docs:       wit.Docs{},
-                                        _worldItem: wit._worldItem{},
-                                        _type:      wit._type{},
-                                    },
-                                    Err:          nil,
+                                    OK:           wit.U64{},
+                                    Err:          &wit.TypeDef{(CYCLIC REFERENCE)},
                                     _typeDefKind: wit._typeDefKind{},
                                 },
                                 Owner:      nil,
@@ -5138,11 +4945,8 @@
                                 Kind: &wit.Result{
                                     OK: &wit.TypeDef{
                                         Name: (*string)(nil),
-                                        Kind: &wit.Tuple{
-                                            Types: {
-                                                &wit.TypeDef{(CYCLIC REFERENCE)},
-                                                &wit.TypeDef{(CYCLIC REFERENCE)},
-                                            },
+                                        Kind: &wit.List{
+                                            Type:         wit.U8{},
                                             _typeDefKind: wit._typeDefKind{},
                                         },
                                         Owner:      nil,
@@ -5150,7 +4954,7 @@
                                         _worldItem: wit._worldItem{},
                                         _type:      wit._type{},
                                     },
-                                    Err:          nil,
+                                    Err:          &wit.TypeDef{(CYCLIC REFERENCE)},
                                     _typeDefKind: wit._typeDefKind{},
                                 },
                                 Owner:      nil,
@@ -5195,21 +4999,8 @@
                             Type: &wit.TypeDef{
                                 Name: (*string)(nil),
                                 Kind: &wit.Result{
-                                    OK: &wit.TypeDef{
-                                        Name: (*string)(nil),
-                                        Kind: &wit.Tuple{
-                                            Types: {
-                                                wit.U64{},
-                                                &wit.TypeDef{(CYCLIC REFERENCE)},
-                                            },
-                                            _typeDefKind: wit._typeDefKind{},
-                                        },
-                                        Owner:      nil,
-                                        Docs:       wit.Docs{},
-                                        _worldItem: wit._worldItem{},
-                                        _type:      wit._type{},
-                                    },
-                                    Err:          nil,
+                                    OK:           wit.U64{},
+                                    Err:          &wit.TypeDef{(CYCLIC REFERENCE)},
                                     _typeDefKind: wit._typeDefKind{},
                                 },
                                 Owner:      nil,
@@ -5330,7 +5121,7 @@
                             Name: "src",
                             Type: &wit.TypeDef{
                                 Name: (*string)(nil),
-                                Kind: &wit.OwnedHandle{
+                                Kind: &wit.BorrowedHandle{
                                     Type:    &wit.TypeDef{(CYCLIC REFERENCE)},
                                     _handle: wit._handle{},
                                 },
@@ -5351,21 +5142,8 @@
                             Type: &wit.TypeDef{
                                 Name: (*string)(nil),
                                 Kind: &wit.Result{
-                                    OK: &wit.TypeDef{
-                                        Name: (*string)(nil),
-                                        Kind: &wit.Tuple{
-                                            Types: {
-                                                wit.U64{},
-                                                &wit.TypeDef{(CYCLIC REFERENCE)},
-                                            },
-                                            _typeDefKind: wit._typeDefKind{},
-                                        },
-                                        Owner:      nil,
-                                        Docs:       wit.Docs{},
-                                        _worldItem: wit._worldItem{},
-                                        _type:      wit._type{},
-                                    },
-                                    Err:          nil,
+                                    OK:           wit.U64{},
+                                    Err:          &wit.TypeDef{(CYCLIC REFERENCE)},
                                     _typeDefKind: wit._typeDefKind{},
                                 },
                                 Owner:      nil,
@@ -5564,75 +5342,6 @@
                     Docs:       wit.Docs{},
                     _worldItem: wit._worldItem{},
                 },
-                "[method]output-stream.forward": &wit.Function{
-                    Name: "[method]output-stream.forward",
-                    Kind: &wit.Method{
-                        Type:          &wit.TypeDef{(CYCLIC REFERENCE)},
-                        _functionKind: wit._functionKind{},
-                    },
-                    Params: {
-                        {
-                            Name: "self",
-                            Type: &wit.TypeDef{
-                                Name: (*string)(nil),
-                                Kind: &wit.BorrowedHandle{
-                                    Type:    &wit.TypeDef{(CYCLIC REFERENCE)},
-                                    _handle: wit._handle{},
-                                },
-                                Owner:      nil,
-                                Docs:       wit.Docs{},
-                                _worldItem: wit._worldItem{},
-                                _type:      wit._type{},
-                            },
-                        },
-                        {
-                            Name: "src",
-                            Type: &wit.TypeDef{
-                                Name: (*string)(nil),
-                                Kind: &wit.OwnedHandle{
-                                    Type:    &wit.TypeDef{(CYCLIC REFERENCE)},
-                                    _handle: wit._handle{},
-                                },
-                                Owner:      nil,
-                                Docs:       wit.Docs{},
-                                _worldItem: wit._worldItem{},
-                                _type:      wit._type{},
-                            },
-                        },
-                    },
-                    Results: {
-                        {
-                            Name: "",
-                            Type: &wit.TypeDef{
-                                Name: (*string)(nil),
-                                Kind: &wit.Result{
-                                    OK: &wit.TypeDef{
-                                        Name: (*string)(nil),
-                                        Kind: &wit.Tuple{
-                                            Types: {
-                                                wit.U64{},
-                                                &wit.TypeDef{(CYCLIC REFERENCE)},
-                                            },
-                                            _typeDefKind: wit._typeDefKind{},
-                                        },
-                                        Owner:      nil,
-                                        Docs:       wit.Docs{},
-                                        _worldItem: wit._worldItem{},
-                                        _type:      wit._type{},
-                                    },
-                                    Err:          nil,
-                                    _typeDefKind: wit._typeDefKind{},
-                                },
-                                Owner:      nil,
-                                Docs:       wit.Docs{},
-                                _worldItem: wit._worldItem{},
-                                _type:      wit._type{},
-                            },
-                        },
-                    },
-                    Docs:       wit.Docs{},
-                    _worldItem: wit._worldItem{},
-                },
                 "[method]output-stream.splice": &wit.Function{
                     Name: "[method]output-stream.splice",
                     Kind: &wit.Method{
@@ -5658,7 +5367,7 @@
                             Name: "src",
                             Type: &wit.TypeDef{
                                 Name: (*string)(nil),
-                                Kind: &wit.OwnedHandle{
+                                Kind: &wit.BorrowedHandle{
                                     Type:    &wit.TypeDef{(CYCLIC REFERENCE)},
                                     _handle: wit._handle{},
                                 },
@@ -5679,21 +5388,8 @@
                             Type: &wit.TypeDef{
                                 Name: (*string)(nil),
                                 Kind: &wit.Result{
-                                    OK: &wit.TypeDef{
-                                        Name: (*string)(nil),
-                                        Kind: &wit.Tuple{
-                                            Types: {
-                                                wit.U64{},
-                                                &wit.TypeDef{(CYCLIC REFERENCE)},
-                                            },
-                                            _typeDefKind: wit._typeDefKind{},
-                                        },
-                                        Owner:      nil,
-                                        Docs:       wit.Docs{},
-                                        _worldItem: wit._worldItem{},
-                                        _type:      wit._type{},
-                                    },
-                                    Err:          nil,
+                                    OK:           wit.U64{},
+                                    Err:          &wit.TypeDef{(CYCLIC REFERENCE)},
                                     _typeDefKind: wit._typeDefKind{},
                                 },
                                 Owner:      nil,
@@ -5873,6 +5569,14 @@
         &wit.Interface{
             Name:     &"monotonic-clock",
             TypeDefs: {
+                "duration": &wit.TypeDef{
+                    Name:       &"duration",
+                    Kind:       wit.U64{},
+                    Owner:      &wit.Interface{(CYCLIC REFERENCE)},
+                    Docs:       wit.Docs{},
+                    _worldItem: wit._worldItem{},
+                    _type:      wit._type{},
+                },
                 "instant": &wit.TypeDef{
                     Name:       &"instant",
                     Kind:       wit.U64{},
@@ -5917,17 +5621,41 @@
                     Docs:       wit.Docs{},
                     _worldItem: wit._worldItem{},
                 },
-                "subscribe": &wit.Function{
-                    Name:   "subscribe",
+                "subscribe-duration": &wit.Function{
+                    Name:   "subscribe-duration",
                     Kind:   &wit.Freestanding{},
                     Params: {
                         {
                             Name: "when",
                             Type: &wit.TypeDef{(CYCLIC REFERENCE)},
                         },
+                    },
+                    Results: {
                         {
-                            Name: "absolute",
-                            Type: wit.Bool{},
+                            Name: "",
+                            Type: &wit.TypeDef{
+                                Name: (*string)(nil),
+                                Kind: &wit.OwnedHandle{
+                                    Type:    &wit.TypeDef{(CYCLIC REFERENCE)},
+                                    _handle: wit._handle{},
+                                },
+                                Owner:      nil,
+                                Docs:       wit.Docs{},
+                                _worldItem: wit._worldItem{},
+                                _type:      wit._type{},
+                            },
+                        },
+                    },
+                    Docs:       wit.Docs{},
+                    _worldItem: wit._worldItem{},
+                },
+                "subscribe-instant": &wit.Function{
+                    Name:   "subscribe-instant",
+                    Kind:   &wit.Freestanding{},
+                    Params: {
+                        {
+                            Name: "when",
+                            Type: &wit.TypeDef{(CYCLIC REFERENCE)},
                         },
                     },
                     Results: {
@@ -6416,15 +6144,36 @@
             _type:      wit._type{},
         },
         &wit.TypeDef{
-            Name: &"stream-status",
-            Kind: &wit.Enum{
+            Name:       &"error",
+            Kind:       &wit.Resource{},
+            Owner:      &wit.Interface{(CYCLIC REFERENCE)},
+            Docs:       wit.Docs{},
+            _worldItem: wit._worldItem{},
+            _type:      wit._type{},
+        },
+        &wit.TypeDef{
+            Name: (*string)(nil),
+            Kind: &wit.OwnedHandle{
+                Type:    &wit.TypeDef{(CYCLIC REFERENCE)},
+                _handle: wit._handle{},
+            },
+            Owner:      nil,
+            Docs:       wit.Docs{},
+            _worldItem: wit._worldItem{},
+            _type:      wit._type{},
+        },
+        &wit.TypeDef{
+            Name: &"stream-error",
+            Kind: &wit.Variant{
                 Cases: {
                     {
-                        Name: "open",
+                        Name: "last-operation-failed",
+                        Type: &wit.TypeDef{(CYCLIC REFERENCE)},
                         Docs: wit.Docs{},
                     },
                     {
-                        Name: "ended",
+                        Name: "closed",
+                        Type: nil,
                         Docs: wit.Docs{},
                     },
                 },
@@ -6444,29 +6193,20 @@
             _type:      wit._type{},
         },
         &wit.TypeDef{
-            Name: &"write-error",
-            Kind: &wit.Enum{
-                Cases: {
-                    {
-                        Name: "last-operation-failed",
-                        Docs: wit.Docs{},
-                    },
-                    {
-                        Name: "closed",
-                        Docs: wit.Docs{},
-                    },
-                },
-                _typeDefKind: wit._typeDefKind{},
-            },
+            Name:       &"output-stream",
+            Kind:       &wit.Resource{},
             Owner:      &wit.Interface{(CYCLIC REFERENCE)},
             Docs:       wit.Docs{},
             _worldItem: wit._worldItem{},
             _type:      wit._type{},
         },
         &wit.TypeDef{
-            Name:       &"output-stream",
-            Kind:       &wit.Resource{},
-            Owner:      &wit.Interface{(CYCLIC REFERENCE)},
+            Name: (*string)(nil),
+            Kind: &wit.BorrowedHandle{
+                Type:    &wit.TypeDef{(CYCLIC REFERENCE)},
+                _handle: wit._handle{},
+            },
+            Owner:      nil,
             Docs:       wit.Docs{},
             _worldItem: wit._worldItem{},
             _type:      wit._type{},
@@ -6495,61 +6235,10 @@
         },
         &wit.TypeDef{
             Name: (*string)(nil),
-            Kind: &wit.Tuple{
-                Types: {
-                    &wit.TypeDef{(CYCLIC REFERENCE)},
-                    &wit.TypeDef{(CYCLIC REFERENCE)},
-                },
-                _typeDefKind: wit._typeDefKind{},
-            },
-            Owner:      nil,
-            Docs:       wit.Docs{},
-            _worldItem: wit._worldItem{},
-            _type:      wit._type{},
-        },
-        &wit.TypeDef{
-            Name: (*string)(nil),
             Kind: &wit.Result{
                 OK:           &wit.TypeDef{(CYCLIC REFERENCE)},
-                Err:          nil,
+                Err:          &wit.TypeDef{(CYCLIC REFERENCE)},
                 _typeDefKind: wit._typeDefKind{},
-            },
-            Owner:      nil,
-            Docs:       wit.Docs{},
-            _worldItem: wit._worldItem{},
-            _type:      wit._type{},
-        },
-        &wit.TypeDef{
-            Name: (*string)(nil),
-            Kind: &wit.Tuple{
-                Types: {
-                    wit.U64{},
-                    &wit.TypeDef{(CYCLIC REFERENCE)},
-                },
-                _typeDefKind: wit._typeDefKind{},
-            },
-            Owner:      nil,
-            Docs:       wit.Docs{},
-            _worldItem: wit._worldItem{},
-            _type:      wit._type{},
-        },
-        &wit.TypeDef{
-            Name: (*string)(nil),
-            Kind: &wit.Result{
-                OK:           &wit.TypeDef{(CYCLIC REFERENCE)},
-                Err:          nil,
-                _typeDefKind: wit._typeDefKind{},
-            },
-            Owner:      nil,
-            Docs:       wit.Docs{},
-            _worldItem: wit._worldItem{},
-            _type:      wit._type{},
-        },
-        &wit.TypeDef{
-            Name: (*string)(nil),
-            Kind: &wit.BorrowedHandle{
-                Type:    &wit.TypeDef{(CYCLIC REFERENCE)},
-                _handle: wit._handle{},
             },
             Owner:      nil,
             Docs:       wit.Docs{},
@@ -6562,6 +6251,17 @@
                 OK:           wit.U64{},
                 Err:          &wit.TypeDef{(CYCLIC REFERENCE)},
                 _typeDefKind: wit._typeDefKind{},
+            },
+            Owner:      nil,
+            Docs:       wit.Docs{},
+            _worldItem: wit._worldItem{},
+            _type:      wit._type{},
+        },
+        &wit.TypeDef{
+            Name: (*string)(nil),
+            Kind: &wit.BorrowedHandle{
+                Type:    &wit.TypeDef{(CYCLIC REFERENCE)},
+                _handle: wit._handle{},
             },
             Owner:      nil,
             Docs:       wit.Docs{},
@@ -6592,17 +6292,6 @@
             _type:      wit._type{},
         },
         &wit.TypeDef{
-            Name: (*string)(nil),
-            Kind: &wit.OwnedHandle{
-                Type:    &wit.TypeDef{(CYCLIC REFERENCE)},
-                _handle: wit._handle{},
-            },
-            Owner:      nil,
-            Docs:       wit.Docs{},
-            _worldItem: wit._worldItem{},
-            _type:      wit._type{},
-        },
-        &wit.TypeDef{
             Name:       &"pollable",
             Kind:       &wit.TypeDef{(CYCLIC REFERENCE)},
             Owner:      &wit.Interface{(CYCLIC REFERENCE)},
@@ -6612,6 +6301,14 @@
         },
         &wit.TypeDef{
             Name:       &"instant",
+            Kind:       wit.U64{},
+            Owner:      &wit.Interface{(CYCLIC REFERENCE)},
+            Docs:       wit.Docs{},
+            _worldItem: wit._worldItem{},
+            _type:      wit._type{},
+        },
+        &wit.TypeDef{
+            Name:       &"duration",
             Kind:       wit.U64{},
             Owner:      &wit.Interface{(CYCLIC REFERENCE)},
             Docs:       wit.Docs{},

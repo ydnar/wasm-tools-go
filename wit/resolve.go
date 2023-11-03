@@ -44,6 +44,11 @@ type World struct {
 	_typeOwner
 }
 
+// Path returns the fully-qualified path for this world, such as "wasi:clocks/imports".
+func (w *World) Path() string {
+	return w.Package.Name.String() + "/" + w.Name
+}
+
 // AllFunctions [iterates] through all functions exported from or imported into a [World],
 // calling yield for each. Iteration will stop if yield returns false.
 //
@@ -1125,9 +1130,14 @@ func (pn *PackageName) Validate() error {
 // String implements [fmt.Stringer], returning the canonical string representation of a [PackageName].
 func (pn *PackageName) String() string {
 	if pn.Version == nil {
-		return pn.Namespace + ":" + pn.Name
+		return pn.ShortString()
 	}
 	return pn.Namespace + ":" + pn.Name + "@" + pn.Version.String()
+}
+
+// ShortString returns the canonical string representation of a [PackageName] pn without version information.
+func (pn *PackageName) ShortString() string {
+	return pn.Namespace + ":" + pn.Name
 }
 
 // Docs represent WIT documentation text extracted from comments.
