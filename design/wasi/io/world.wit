@@ -38,6 +38,11 @@ interface streams {
     }
 }
 
+world imports {
+    import poll;
+    import streams;
+}
+
 world exports {
     export poll;
     export streams;

@@ -12,6 +12,19 @@
       },
       "exports": {},
       "package": 0
+    },
+    {
+      "name": "exports",
+      "imports": {},
+      "exports": {
+        "interface-0": {
+          "interface": 0
+        },
+        "interface-1": {
+          "interface": 1
+        }
+      },
+      "package": 0
     }
   ],
   "interfaces": [
@@ -575,7 +588,8 @@
         "streams": 1
       },
       "worlds": {
-        "imports": 0
+        "imports": 0,
+        "exports": 1
       }
     }
   ]
