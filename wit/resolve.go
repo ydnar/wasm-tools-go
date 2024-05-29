@@ -284,6 +284,9 @@ type Pointer struct {
 	Type Type
 }
 
+// isFlatType implements the [FlatType] interface.
+func (*Pointer) isFlatType() {}
+
 // Size returns the [ABI byte size] for [Pointer].
 //
 // [ABI byte size]: https://github.com/WebAssembly/component-model/blob/main/design/mvp/CanonicalABI.md#size
@@ -994,6 +997,15 @@ type _type struct{ _typeDefKind }
 
 func (_type) isType() {}
 
+// FlatType is the interface implemented by types permitted by the [Canonical ABI]
+// flattening rules for function params and results (i32, i64, f32, f64).
+//
+// [Canonical ABI]: https://github.com/WebAssembly/component-model/blob/main/design/mvp/CanonicalABI.md#flattening
+type FlatType interface {
+	Type
+	isFlatType()
+}
+
 // ParseType parses a WIT [primitive type] string into
 // the associated Type implementation from this package.
 // It returns an error if the type string is not recognized.
@@ -1195,51 +1207,69 @@ type U16 struct{ _primitive[uint16] }
 
 // S32 represents the WIT [primitive type] s32, a signed 32-bit integer.
 // It is equivalent to the Go type [int32].
-// It implements the [Node], [ABI], [Type], and [TypeDefKind] interfaces.
+// It implements the [Node], [ABI], [Type], [FlatType], and [TypeDefKind] interfaces.
 //
 // [primitive type]: https://component-model.bytecodealliance.org/design/wit.html#primitive-types
 // [int32]: https://pkg.go.dev/builtin#int32
 type S32 struct{ _primitive[int32] }
 
+// isFlatType implements the [FlatType] interface.
+func (S32) isFlatType() {}
+
 // U32 represents the WIT [primitive type] u32, an unsigned 32-bit integer.
 // It is equivalent to the Go type [uint32].
-// It implements the [Node], [ABI], [Type], and [TypeDefKind] interfaces.
+// It implements the [Node], [ABI], [Type], [FlatType], and [TypeDefKind] interfaces.
 //
 // [primitive type]: https://component-model.bytecodealliance.org/design/wit.html#primitive-types
 // [uint32]: https://pkg.go.dev/builtin#uint32
 type U32 struct{ _primitive[uint32] }
 
+// isFlatType implements the [FlatType] interface.
+func (U32) isFlatType() {}
+
 // S64 represents the WIT [primitive type] s64, a signed 64-bit integer.
 // It is equivalent to the Go type [int64].
-// It implements the [Node], [ABI], [Type], and [TypeDefKind] interfaces.
+// It implements the [Node], [ABI], [Type], [FlatType], and [TypeDefKind] interfaces.
 //
 // [primitive type]: https://component-model.bytecodealliance.org/design/wit.html#primitive-types
 // [int64]: https://pkg.go.dev/builtin#int64
 type S64 struct{ _primitive[int64] }
 
+// isFlatType implements the [FlatType] interface.
+func (S64) isFlatType() {}
+
 // U64 represents the WIT [primitive type] u64, an unsigned 64-bit integer.
 // It is equivalent to the Go type [uint64].
-// It implements the [Node], [ABI], [Type], and [TypeDefKind] interfaces.
+// It implements the [Node], [ABI], [Type], [FlatType], and [TypeDefKind] interfaces.
 //
 // [primitive type]: https://component-model.bytecodealliance.org/design/wit.html#primitive-types
 // [uint64]: https://pkg.go.dev/builtin#uint64
 type U64 struct{ _primitive[uint64] }
 
+// isFlatType implements the [FlatType] interface.
+func (U64) isFlatType() {}
+
 // F32 represents the WIT [primitive type] f32, a 32-bit floating point value.
 // It is equivalent to the Go type [float32].
-// It implements the [Node], [ABI], [Type], and [TypeDefKind] interfaces.
+// It implements the [Node], [ABI], [Type], [FlatType], and [TypeDefKind] interfaces.
 //
 // [primitive type]: https://component-model.bytecodealliance.org/design/wit.html#primitive-types
 // [float32]: https://pkg.go.dev/builtin#float32
 type F32 struct{ _primitive[float32] }
 
+// isFlatType implements the [FlatType] interface.
+func (F32) isFlatType() {}
+
 // F64 represents the WIT [primitive type] f64, a 64-bit floating point value.
 // It is equivalent to the Go type [float64].
-// It implements the [Node], [ABI], [Type], and [TypeDefKind] interfaces.
+// It implements the [Node], [ABI], [Type], [FlatType], and [TypeDefKind] interfaces.
 //
 // [primitive type]: https://component-model.bytecodealliance.org/design/wit.html#primitive-types
 // [float64]: https://pkg.go.dev/builtin#float64
 type F64 struct{ _primitive[float64] }
+
+// isFlatType implements the [FlatType] interface.
+func (F64) isFlatType() {}
 
 // Char represents the WIT [primitive type] char, a single Unicode character,
 // specifically a [Unicode scalar value]. It is equivalent to the Go type [rune].
