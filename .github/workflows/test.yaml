@@ -43,7 +43,7 @@ jobs:
       - name: Set up wasm-tools
         uses: bytecodealliance/actions/wasm-tools/setup@v1.1.0
         with:
-          version: v1.205.0
+          version: v1.209.1
 
       - name: Set up Go
         uses: actions/setup-go@v5.0.1
@@ -82,7 +82,7 @@ jobs:
       - name: Set up wasm-tools
         uses: bytecodealliance/actions/wasm-tools/setup@v1.1.0
         with:
-          version: v1.205.0
+          version: v1.209.1
 
       - name: Set up Go
         uses: actions/setup-go@v5.0.1
@@ -119,7 +119,7 @@ jobs:
       - name: Set up wasm-tools
         uses: bytecodealliance/actions/wasm-tools/setup@v1.1.0
         with:
-          version: v1.205.0
+          version: v1.209.1
 
       - name: Set up Wasmtime
         uses: bytecodealliance/actions/wasmtime/setup@v1.1.0
