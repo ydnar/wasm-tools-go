@@ -4,12 +4,16 @@
       "name": "world",
       "imports": {
         "interface-0": {
-          "interface": 0
+          "interface": {
+            "id": 0
+          }
         }
       },
       "exports": {
         "interface-0": {
-          "interface": 0
+          "interface": {
+            "id": 0
+          }
         }
       },
       "package": 0
@@ -22,7 +26,8 @@
         "error": 0,
         "export": 4,
         "enum": 5,
-        "record": 7
+        "record": 7,
+        "variant": 8
       },
       "functions": {
         "func": {
@@ -36,7 +41,7 @@
           ],
           "results": [
             {
-              "type": 8
+              "type": 9
             }
           ]
         }
@@ -185,6 +190,74 @@
             {
               "name": "result",
               "type": 6
+            }
+          ]
+        }
+      },
+      "owner": {
+        "interface": 0
+      }
+    },
+    {
+      "name": "variant",
+      "kind": {
+        "variant": {
+          "cases": [
+            {
+              "name": "enum",
+              "type": 7
+            },
+            {
+              "name": "export",
+              "type": 7
+            },
+            {
+              "name": "flags",
+              "type": 7
+            },
+            {
+              "name": "func",
+              "type": 7
+            },
+            {
+              "name": "import",
+              "type": 7
+            },
+            {
+              "name": "include",
+              "type": 7
+            },
+            {
+              "name": "interface",
+              "type": 7
+            },
+            {
+              "name": "package",
+              "type": 7
+            },
+            {
+              "name": "record",
+              "type": 7
+            },
+            {
+              "name": "resource",
+              "type": 7
+            },
+            {
+              "name": "static",
+              "type": 7
+            },
+            {
+              "name": "type",
+              "type": 7
+            },
+            {
+              "name": "variant",
+              "type": 7
+            },
+            {
+              "name": "world",
+              "type": 7
             }
           ]
         }

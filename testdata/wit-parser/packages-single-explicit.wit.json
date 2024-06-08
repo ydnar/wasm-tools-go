@@ -1,39 +1,36 @@
 {
   "worlds": [
     {
-      "name": "w",
+      "name": "w1",
       "imports": {
         "interface-0": {
           "interface": {
             "id": 0
           }
         },
-        "g": {
-          "type": 1
-        }
-      },
-      "exports": {
-        "foo": {
-          "function": {
-            "name": "foo",
-            "kind": "freestanding",
-            "params": [],
-            "results": [
-              {
-                "type": 1
-              }
-            ]
+        "imp1": {
+          "interface": {
+            "id": 1
           }
         }
       },
+      "exports": {},
       "package": 0
     }
   ],
   "interfaces": [
     {
-      "name": "foo",
+      "name": "i1",
       "types": {
-        "g": 0
+        "a": 0
+      },
+      "functions": {},
+      "package": 0
+    },
+    {
+      "name": null,
+      "types": {
+        "a": 1
       },
       "functions": {},
       "package": 0
@@ -41,32 +38,32 @@
   ],
   "types": [
     {
-      "name": "g",
+      "name": "a",
       "kind": {
-        "type": "char"
+        "type": "u32"
       },
       "owner": {
         "interface": 0
       }
     },
     {
-      "name": "g",
+      "name": "a",
       "kind": {
         "type": 0
       },
       "owner": {
-        "world": 0
+        "interface": 1
       }
     }
   ],
   "packages": [
     {
-      "name": "foo:foo",
+      "name": "foo:name",
       "interfaces": {
-        "foo": 0
+        "i1": 0
       },
       "worlds": {
-        "w": 0
+        "w1": 0
       }
     }
   ]

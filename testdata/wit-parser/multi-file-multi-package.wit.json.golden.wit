@@ -1,0 +1,54 @@
+package bar:name;
+
+interface i2 {
+	type b = u32;
+}
+
+world w2 {
+	import i2;
+	import imp2: interface {
+		use i2.{b};
+	}
+}
+
+
+package baz:name;
+
+interface i3 {
+	type a = u32;
+}
+
+world w3 {
+	import i3;
+	import imp3: interface {
+		use i3.{a};
+	}
+}
+
+
+package foo:name;
+
+interface i1 {
+	type a = u32;
+}
+
+world w1 {
+	import i1;
+	import imp1: interface {
+		use i1.{a};
+	}
+}
+
+
+package qux:name;
+
+interface i4 {
+	type b = u32;
+}
+
+world w4 {
+	import i4;
+	import imp4: interface {
+		use i4.{b};
+	}
+}

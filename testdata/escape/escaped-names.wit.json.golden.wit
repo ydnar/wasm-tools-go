@@ -26,6 +26,22 @@ interface %interface {
 		%enum: %enum,
 		%result: result<string, error>,
 	}
+	variant %variant {
+		%enum(%record),
+		%export(%record),
+		%flags(%record),
+		%func(%record),
+		%import(%record),
+		%include(%record),
+		%interface(%record),
+		%package(%record),
+		%record(%record),
+		%resource(%record),
+		%static(%record),
+		%type(%record),
+		%variant(%record),
+		%world(%record),
+	}
 	%func: func(rec: %record) -> result<%export, error>;
 }
 

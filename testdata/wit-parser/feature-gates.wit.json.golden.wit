@@ -1,0 +1,37 @@
+package a:b;
+
+interface ungated {
+	ungated: func();
+}
+
+interface ungated2 {
+	type ungated = u32;
+	type ungated2 = ungated;
+}
+
+interface ungated-use-target {
+	type t = u32;
+}
+
+interface ungated-use {
+	use ungated-use-target.{t};
+}
+
+interface ungated-for-world {}
+
+interface with-resources {
+	resource ungated {
+		constructor();
+		y: func();
+		x: static func();
+	}
+}
+
+world ungated-world {
+	import ungated-for-world;
+	export ungated-for-world;
+}
+world mixed-world {
+	import ungated-for-world;
+	export ungated-for-world;
+}

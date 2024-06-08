@@ -4,12 +4,16 @@
       "name": "default",
       "imports": {
         "interface-0": {
-          "interface": 0
+          "interface": {
+            "id": 0
+          }
         }
       },
       "exports": {
         "interface-1": {
-          "interface": 1
+          "interface": {
+            "id": 1
+          }
         }
       },
       "package": 0
@@ -21,13 +25,27 @@
       "types": {
         "res": 0
       },
-      "functions": {},
+      "functions": {
+        "[method]res.do": {
+          "name": "[method]res.do",
+          "kind": {
+            "method": 0
+          },
+          "params": [
+            {
+              "name": "self",
+              "type": 1
+            }
+          ],
+          "results": []
+        }
+      },
       "package": 0
     },
     {
       "name": "f",
       "types": {
-        "res": 1
+        "res": 2
       },
       "functions": {
         "report": {
@@ -36,7 +54,7 @@
           "params": [
             {
               "name": "r",
-              "type": 2
+              "type": 3
             }
           ],
           "results": []
@@ -54,6 +72,15 @@
       }
     },
     {
+      "name": null,
+      "kind": {
+        "handle": {
+          "borrow": 0
+        }
+      },
+      "owner": null
+    },
+    {
       "name": "res",
       "kind": {
         "type": 0
@@ -66,7 +93,7 @@
       "name": null,
       "kind": {
         "handle": {
-          "own": 1
+          "own": 2
         }
       },
       "owner": null

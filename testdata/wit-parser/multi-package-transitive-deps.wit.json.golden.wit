@@ -1,0 +1,28 @@
+package foo:dep2;
+
+interface types {
+	resource a;
+}
+
+
+package foo:dep1;
+
+interface types {
+	use foo:dep2/types.{a};
+	record r { f: u8 }
+}
+
+
+package foo:bar;
+
+world w-bar {
+	import foo:dep2/types;
+	import foo:dep1/types;
+}
+
+
+package foo:qux;
+
+world w-qux {
+	import foo:dep2/types;
+}

@@ -1,7 +1,9 @@
 package example:uses;
 
 interface a {
-	resource res;
+	resource res {
+		do: func();
+	}
 }
 
 interface f {

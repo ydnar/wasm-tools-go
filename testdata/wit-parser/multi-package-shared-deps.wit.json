@@ -1,67 +1,82 @@
 {
   "worlds": [
     {
-      "name": "bar",
+      "name": "w-bar",
       "imports": {
         "interface-0": {
           "interface": {
             "id": 0
           }
-        }
-      },
-      "exports": {
+        },
         "interface-1": {
           "interface": {
             "id": 1
           }
         }
       },
-      "package": 0
+      "exports": {},
+      "package": 2
     },
     {
-      "name": "foo",
+      "name": "w-qux",
       "imports": {
         "interface-0": {
           "interface": {
             "id": 0
           }
-        }
-      },
-      "exports": {
+        },
         "interface-1": {
           "interface": {
             "id": 1
           }
         }
       },
-      "package": 0
+      "exports": {},
+      "package": 3
     }
   ],
   "interfaces": [
     {
-      "name": "a",
+      "name": "types",
       "types": {},
       "functions": {},
       "package": 0
     },
     {
-      "name": "b",
+      "name": "types",
       "types": {},
       "functions": {},
-      "package": 0
+      "package": 1
     }
   ],
   "types": [],
   "packages": [
     {
-      "name": "foo:foo",
+      "name": "foo:dep1",
       "interfaces": {
-        "a": 0,
-        "b": 1
+        "types": 0
       },
+      "worlds": {}
+    },
+    {
+      "name": "foo:dep2",
+      "interfaces": {
+        "types": 1
+      },
+      "worlds": {}
+    },
+    {
+      "name": "foo:bar",
+      "interfaces": {},
       "worlds": {
-        "bar": 0,
-        "foo": 1
+        "w-bar": 0
+      }
+    },
+    {
+      "name": "foo:qux",
+      "interfaces": {},
+      "worlds": {
+        "w-qux": 1
       }
     }
   ]

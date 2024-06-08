@@ -1,0 +1,45 @@
+package a:b@1.0.1;
+
+interface foo1 {}
+
+interface foo2 {}
+
+interface foo3 {}
+
+interface in-an-interface {
+	resource r1;
+	resource r2;
+	type t1 = u32;
+	record t2 { a: u32 }
+	enum t3 { a }
+	flags t4 { a }
+	variant t5 { a }
+	resource r3 {
+		constructor();
+		x2: func();
+		x1: static func();
+	}
+	foo: func();
+}
+
+interface z {}
+
+world w1 {}
+world w2 {}
+world in-a-world {
+	import y: interface {}
+	import z;
+	record t1 { x: u32 }
+	enum t2 { a }
+	variant t3 { a }
+	flags t4 { a }
+	type t5 = u32;
+	resource t6;
+	resource t7 {
+		constructor();
+	}
+	import x: func();
+	export x: func();
+	export y: interface {}
+	export z;
+}

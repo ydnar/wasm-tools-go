@@ -5,7 +5,9 @@
       "imports": {},
       "exports": {
         "interface-0": {
-          "interface": 0
+          "interface": {
+            "id": 0
+          }
         }
       },
       "package": 0

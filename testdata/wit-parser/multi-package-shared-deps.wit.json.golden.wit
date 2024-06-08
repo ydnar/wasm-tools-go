@@ -1,0 +1,24 @@
+package foo:dep1;
+
+interface types {}
+
+
+package foo:dep2;
+
+interface types {}
+
+
+package foo:bar;
+
+world w-bar {
+	import foo:dep1/types;
+	import foo:dep2/types;
+}
+
+
+package foo:qux;
+
+world w-qux {
+	import foo:dep1/types;
+	import foo:dep2/types;
+}
