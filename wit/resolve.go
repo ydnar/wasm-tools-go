@@ -8,6 +8,7 @@ import (
 	"strings"
 	"unsafe"
 
+	"github.com/coreos/go-semver/semver"
 	"github.com/ydnar/wasm-tools-go/wit/iterate"
 	"github.com/ydnar/wasm-tools-go/wit/ordered"
 )
@@ -89,7 +90,7 @@ func (w *World) AllFunctions() iterate.Seq[*Function] {
 }
 
 // A WorldItem is any item that can be exported from or imported into a [World],
-// currently either an [Interface], [TypeDef], or [Function].
+// currently either an [InterfaceStability], [TypeDef], or [Function].
 // Any WorldItem is also a [Node].
 type WorldItem interface {
 	Node
@@ -101,15 +102,23 @@ type _worldItem struct{}
 
 func (_worldItem) isWorldItem() {}
 
+// An InterfaceStability represents a reference to an [Interface] with a [Stability] attribute.
+// It implements the [Node] and [WorldItem] interfaces.
+type InterfaceStability struct {
+	_worldItem
+
+	Interface *Interface
+	Stability Stability
+}
+
 // An Interface represents a [collection of types and functions], which are imported into
 // or exported from a [WebAssembly component].
-// It implements the [Node], [TypeOwner], and [WorldItem] interfaces.
+// It implements the [Node], and [TypeOwner] interfaces.
 //
 // [collection of types and functions]: https://github.com/WebAssembly/component-model/blob/main/design/mvp/WIT.md#wit-interfaces.
 // [WebAssembly component]: https://github.com/WebAssembly/component-model/blob/main/design/mvp/WIT.md#wit-worlds
 type Interface struct {
 	_typeOwner
-	_worldItem
 
 	Name      *string
 	TypeDefs  ordered.Map[string, *TypeDef]
@@ -1443,6 +1452,32 @@ type Package struct {
 	Interfaces ordered.Map[string, *Interface]
 	Worlds     ordered.Map[string, *World]
 	Docs       Docs
+}
+
+// Stability represents the version or feature-gated stability of a given feature.
+type Stability interface {
+	Node
+	isStability()
+}
+
+// _stability is an embeddable type that conforms to the [Stability] interface.
+type _stability struct{}
+
+func (_stability) isStability() {}
+
+// Stable represents a stable WIT feature, for example: @since(version = 1.2.3)
+//
+// Stable features have an explicit since version and an optional feature name.
+type Stable struct {
+	_stability
+	Since   semver.Version
+	Feature string
+}
+
+// Unstable represents an unstable WIT feature defined by name.
+type Unstable struct {
+	_stability
+	Feature string
 }
 
 // Docs represent WIT documentation text extracted from comments.

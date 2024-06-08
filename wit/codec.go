@@ -39,6 +39,8 @@ func (res *Resolve) ResolveCodec(v any) codec.Codec {
 		return &functionKindCodec{v}
 	case *Handle:
 		return &handleCodec{v}
+	case *Stability:
+		return &stabilityCodec{v}
 	case *Type:
 		return &typeCodec{v, res}
 	case *TypeDefKind:
@@ -202,6 +204,18 @@ func (pn *Ident) DecodeString(s string) error {
 
 // DecodeField implements the [codec.FieldDecoder] interface
 // to decode a struct or JSON object.
+func (i *InterfaceStability) DecodeField(dec codec.Decoder, name string) error {
+	switch name {
+	case "id":
+		return dec.Decode(&i.Interface)
+	case "stability":
+		return dec.Decode(&i.Stability)
+	}
+	return nil
+}
+
+// DecodeField implements the [codec.FieldDecoder] interface
+// to decode a struct or JSON object.
 func (d *Docs) DecodeField(dec codec.Decoder, name string) error {
 	switch name {
 	case "contents":
@@ -220,8 +234,8 @@ func (c *worldItemCodec) DecodeField(dec codec.Decoder, name string) error {
 	var err error
 	switch name {
 	case "interface":
-		var v *Interface
-		err = dec.Decode(&v)
+		v := &InterfaceStability{}
+		err = dec.Decode(v)
 		*c.v = v
 	case "function":
 		var v *Function
@@ -439,6 +453,25 @@ func (c *handleCodec) DecodeField(dec codec.Decoder, name string) error {
 	case "borrow":
 		v := &Borrow{}
 		err = dec.Decode(&v.Type)
+		*c.v = v
+	}
+	return err
+}
+
+type stabilityCodec struct {
+	v *Stability
+}
+
+func (c *stabilityCodec) DecodeField(dec codec.Decoder, name string) error {
+	var err error
+	switch name {
+	case "stable":
+		v := &Stable{}
+		err = dec.Decode(v)
+		*c.v = v
+	case "unstable":
+		v := &Unstable{}
+		err = dec.Decode(v)
 		*c.v = v
 	}
 	return err

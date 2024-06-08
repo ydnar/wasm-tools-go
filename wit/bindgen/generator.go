@@ -251,8 +251,9 @@ func (g *generator) defineWorld(w *wit.World) error {
 	var err error
 	w.Imports.All()(func(name string, v wit.WorldItem) bool {
 		switch v := v.(type) {
-		case *wit.Interface:
-			err = g.defineInterface(wit.Imported, v, name)
+		case *wit.InterfaceStability:
+			// TODO: handle Stability
+			err = g.defineInterface(wit.Imported, v.Interface, name)
 		case *wit.TypeDef:
 			err = g.defineTypeDef(wit.Imported, v, name)
 		case *wit.Function:
@@ -268,8 +269,9 @@ func (g *generator) defineWorld(w *wit.World) error {
 
 	w.Exports.All()(func(name string, v wit.WorldItem) bool {
 		switch v := v.(type) {
-		case *wit.Interface:
-			err = g.defineInterface(wit.Exported, v, name)
+		case *wit.InterfaceStability:
+			// TODO: handle Stability
+			err = g.defineInterface(wit.Exported, v.Interface, name)
 		case *wit.TypeDef:
 			// WIT does not currently allow worlds to export types.
 			err = errors.New("exported type in world " + w.Name)

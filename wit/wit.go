@@ -67,6 +67,38 @@ func (r *Resolve) WIT(_ Node, _ string) string {
 }
 
 // WITKind returns the WIT kind.
+func (*Stable) WITKind() string { return "@since" }
+
+// WIT returns the [WIT] text format for [Stable] s.
+//
+// [WIT]: https://github.com/WebAssembly/component-model/blob/main/design/mvp/WIT.md
+func (s *Stable) WIT(_ Node, _ string) string {
+	var b strings.Builder
+	b.WriteString("@since(version = ")
+	b.WriteString(s.Since.String())
+	if s.Feature != "" {
+		b.WriteString(", feature = ")
+		b.WriteString(s.Feature)
+	}
+	b.WriteRune(')')
+	return b.String()
+}
+
+// WITKind returns the WIT kind.
+func (*Unstable) WITKind() string { return "@unstable" }
+
+// WIT returns the [WIT] text format for [Unstable] u.
+//
+// [WIT]: https://github.com/WebAssembly/component-model/blob/main/design/mvp/WIT.md
+func (u *Unstable) WIT(_ Node, _ string) string {
+	var b strings.Builder
+	b.WriteString("@unstable(feature = ")
+	b.WriteString(u.Feature)
+	b.WriteRune(')')
+	return b.String()
+}
+
+// WITKind returns the WIT kind.
 func (*Docs) WITKind() string { return "docs" }
 
 // WIT returns the [WIT] text format for [Docs] d.
@@ -163,12 +195,25 @@ func (w *World) WIT(ctx Node, name string) string {
 
 func (w *World) itemWIT(motion, name string, v WorldItem) string {
 	switch v := v.(type) {
-	case *Interface, *Function:
+	case *InterfaceStability, *Function:
 		return motion + " " + v.WIT(w, name) // TODO: handle resource methods?
 	case *TypeDef:
 		return v.WIT(w, name) // no motion, in Imports only
 	}
 	panic("BUG: unknown WorldItem")
+}
+
+// WITKind returns the WIT kind.
+func (*InterfaceStability) WITKind() string { return "interface stability" }
+
+// WIT returns the [WIT] text format for [InterfaceStability] i.
+//
+// [WIT]: https://github.com/WebAssembly/component-model/blob/main/design/mvp/WIT.md
+func (i *InterfaceStability) WIT(ctx Node, name string) string {
+	if i.Stability == nil {
+		return i.Interface.WIT(ctx, name)
+	}
+	return i.Stability.WIT(ctx, "") + "\n" + i.Interface.WIT(ctx, name)
 }
 
 // WITKind returns the WIT kind.
