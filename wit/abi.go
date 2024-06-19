@@ -25,7 +25,7 @@ func Discriminant(n int) Type {
 }
 
 // ABI is the interface implemented by any type that can report its
-// [Canonical ABI] [size], [alignment], and [flat] representation.
+// [Canonical ABI] [size], [alignment], memory layout, and [flat] representation.
 //
 // [Canonical ABI]: https://github.com/WebAssembly/component-model/blob/main/design/mvp/CanonicalABI.md
 // [size]: https://github.com/WebAssembly/component-model/blob/main/design/mvp/CanonicalABI.md#size
@@ -34,6 +34,7 @@ func Discriminant(n int) Type {
 type ABI interface {
 	Size() uintptr
 	Align() uintptr
+	Layout() []Type
 	Flat() []Type
 }
 
@@ -48,6 +49,15 @@ func Despecialize(k TypeDefKind) TypeDefKind {
 		return d.Despecialize()
 	}
 	return k
+}
+
+// Flatten flattens a sequence of types into a flat representation.
+func Flatten(layout []Type) []Type {
+	flat := make([]Type, 0, len(layout))
+	for _, t := range layout {
+		flat = append(flat, t.Flat()...)
+	}
+	return flat
 }
 
 // HasPointer returns whether or not t contains a [Type] with a pointer, e.g. [String] or [List].

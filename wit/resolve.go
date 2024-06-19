@@ -236,21 +236,18 @@ func (t *TypeDef) Methods() []*Function {
 }
 
 // Size returns the byte size for values of type t.
-func (t *TypeDef) Size() uintptr {
-	return t.Kind.Size()
-}
+func (t *TypeDef) Size() uintptr { return t.Kind.Size() }
 
 // Align returns the byte alignment for values of type t.
-func (t *TypeDef) Align() uintptr {
-	return t.Kind.Align()
-}
+func (t *TypeDef) Align() uintptr { return t.Kind.Align() }
+
+// Layout returns the memory layout type t.
+func (t *TypeDef) Layout() []Type { return t.Kind.Layout() }
 
 // Flat returns the [flattened] ABI representation of t.
 //
 // [flattened]: https://github.com/WebAssembly/component-model/blob/main/design/mvp/CanonicalABI.md#flattening
-func (t *TypeDef) Flat() []Type {
-	return t.Kind.Flat()
-}
+func (t *TypeDef) Flat() []Type { return t.Kind.Flat() }
 
 func (t *TypeDef) hasPointer() bool  { return HasPointer(t.Kind) }
 func (t *TypeDef) hasBorrow() bool   { return HasBorrow(t.Kind) }
@@ -284,9 +281,7 @@ func KindOf[K TypeDefKind](t Type) (kind K) {
 }
 
 // PointerTo returns a [Pointer] to [Type] t.
-func PointerTo(t Type) *TypeDef {
-	return &TypeDef{Kind: &Pointer{Type: t}}
-}
+func PointerTo(t Type) *TypeDef { return &TypeDef{Kind: &Pointer{Type: t}} }
 
 // Pointer represents a pointer to a WIT type.
 // It is only used for ABI representation, e.g. pointers to function parameters or return values.
@@ -305,10 +300,13 @@ func (*Pointer) Size() uintptr { return 4 }
 // [ABI byte alignment]: https://github.com/WebAssembly/component-model/blob/main/design/mvp/CanonicalABI.md#alignment
 func (*Pointer) Align() uintptr { return 4 }
 
-// Flat returns the [flattened] ABI representation of [Pointer].
+// Layout returns the memory layout for p.
+func (p *Pointer) Layout() []Type { return []Type{PointerTo(p.Type)} }
+
+// Flat returns the [flattened] ABI representation of p.
 //
 // [flattened]: https://github.com/WebAssembly/component-model/blob/main/design/mvp/CanonicalABI.md#flattening
-func (*Pointer) Flat() []Type { return []Type{U32{}} }
+func (p *Pointer) Flat() []Type { return []Type{PointerTo(p.Type)} }
 
 // hasPointer always returns true.
 func (*Pointer) hasPointer() bool    { return true }
@@ -347,16 +345,19 @@ func (r *Record) Align() uintptr {
 	return a
 }
 
+// Layout returns the memory layout for r.
+func (r *Record) Layout() []Type {
+	layout := make([]Type, 0, len(r.Fields))
+	for _, f := range r.Fields {
+		layout = append(layout, f.Type.Layout()...)
+	}
+	return layout
+}
+
 // Flat returns the [flattened] ABI representation of [Record] r.
 //
 // [flattened]: https://github.com/WebAssembly/component-model/blob/main/design/mvp/CanonicalABI.md#flattening
-func (r *Record) Flat() []Type {
-	flat := make([]Type, 0, len(r.Fields))
-	for _, f := range r.Fields {
-		flat = append(flat, f.Type.Flat()...)
-	}
-	return flat
-}
+func (r *Record) Flat() []Type { return Flatten(r.Layout()) }
 
 func (r *Record) hasPointer() bool {
 	for _, f := range r.Fields {
@@ -408,10 +409,13 @@ func (*Resource) Size() uintptr { return 4 }
 // [ABI byte alignment]: https://github.com/WebAssembly/component-model/blob/main/design/mvp/CanonicalABI.md#alignment
 func (*Resource) Align() uintptr { return 4 }
 
+// Layout returns the memory layout for [Resource].
+func (*Resource) Layout() []Type { return []Type{U32{}} }
+
 // Flat returns the [flattened] ABI representation of [Resource].
 //
 // [flattened]: https://github.com/WebAssembly/component-model/blob/main/design/mvp/CanonicalABI.md#flattening
-func (*Resource) Flat() []Type { return []Type{U32{}} }
+func (r *Resource) Flat() []Type { return Flatten(r.Layout()) }
 
 // hasResource always returns true.
 func (*Resource) hasResource() bool { return true }
@@ -435,20 +439,23 @@ type _handle struct{ _typeDefKind }
 
 func (_handle) isHandle() {}
 
-// Size returns the [ABI byte size] for this [Handle].
+// Size returns the [ABI byte size] for [Handle].
 //
 // [ABI byte size]: https://github.com/WebAssembly/component-model/blob/main/design/mvp/CanonicalABI.md#size
 func (_handle) Size() uintptr { return 4 }
 
-// Align returns the [ABI byte alignment] for this [Handle].
+// Align returns the [ABI byte alignment] for [Handle].
 //
 // [ABI byte alignment]: https://github.com/WebAssembly/component-model/blob/main/design/mvp/CanonicalABI.md#alignment
 func (_handle) Align() uintptr { return 4 }
 
-// Flat returns the [flattened] ABI representation of this type.
+// Layout returns the memory layout for [Handle].
+func (_handle) Layout() []Type { return []Type{U32{}} }
+
+// Flat returns the [flattened] ABI representation for [Handle].
 //
 // [flattened]: https://github.com/WebAssembly/component-model/blob/main/design/mvp/CanonicalABI.md#flattening
-func (_handle) Flat() []Type { return []Type{U32{}} }
+func (h _handle) Flat() []Type { return Flatten(h.Layout()) }
 
 // Own represents an WIT [owned handle].
 // It implements the [Handle], [Node], [ABI], and [TypeDefKind] interfaces.
@@ -486,40 +493,35 @@ type Flags struct {
 //
 // [ABI byte size]: https://github.com/WebAssembly/component-model/blob/main/design/mvp/CanonicalABI.md#size
 func (f *Flags) Size() uintptr {
-	n := len(f.Flags)
-	switch {
-	case n <= 8:
-		return 1
-	case n <= 16:
-		return 2
-	}
-	return 4 * uintptr((n+31)>>5)
+	layout := f.Layout()
+	return uintptr(len(layout)) * layout[0].Size()
 }
 
 // Align returns the [ABI byte alignment] of [Flags] f.
 //
 // [ABI byte alignment]: https://github.com/WebAssembly/component-model/blob/main/design/mvp/CanonicalABI.md#alignment
-func (f *Flags) Align() uintptr {
+func (f *Flags) Align() uintptr { return f.Layout()[0].Align() }
+
+// Layout returns the memory layout of [Flags] f.
+func (f *Flags) Layout() []Type {
 	n := len(f.Flags)
 	switch {
 	case n <= 8:
-		return 1
+		return []Type{U8{}}
 	case n <= 16:
-		return 2
+		return []Type{U16{}}
 	}
-	return 4
-}
-
-// Flat returns the [flattened] ABI representation of [Flags] f.
-//
-// [flattened]: https://github.com/WebAssembly/component-model/blob/main/design/mvp/CanonicalABI.md#flattening
-func (f *Flags) Flat() []Type {
-	flat := make([]Type, (len(f.Flags)+31)>>5)
+	flat := make([]Type, (n+31)>>5)
 	for i := range flat {
 		flat[i] = U32{}
 	}
 	return flat
 }
+
+// Flat returns the [flattened] ABI representation of [Flags] f.
+//
+// [flattened]: https://github.com/WebAssembly/component-model/blob/main/design/mvp/CanonicalABI.md#flattening
+func (f *Flags) Flat() []Type { return Flatten(f.Layout()) }
 
 // Flag represents a single flag value in a [Flags] type.
 // It implements the [Node] interface.
@@ -587,12 +589,13 @@ func (t *Tuple) Align() uintptr {
 	return t.Despecialize().Align()
 }
 
+// Layout returns the memory layout of [Tuple] t.
+func (t *Tuple) Layout() []Type { return t.Despecialize().Layout() }
+
 // Flat returns the [flattened] ABI representation of [Tuple] t.
 //
 // [flattened]: https://github.com/WebAssembly/component-model/blob/main/design/mvp/CanonicalABI.md#flattening
-func (t *Tuple) Flat() []Type {
-	return t.Despecialize().Flat()
-}
+func (t *Tuple) Flat() []Type { return t.Despecialize().Flat() }
 
 // Variant represents a WIT [variant type], a tagged/discriminated union.
 // A variant type declares one or more cases. Each case has a name and, optionally,
@@ -653,6 +656,22 @@ func (v *Variant) Size() uintptr {
 // [ABI byte alignment]: https://github.com/WebAssembly/component-model/blob/main/design/mvp/CanonicalABI.md#alignment
 func (v *Variant) Align() uintptr {
 	return max(Discriminant(len(v.Cases)).Align(), v.maxCaseAlign())
+}
+
+// Layout returns the memory layout of [Variant] v.
+// Returns nil if there is not a consistent memory layout for all cases.
+func (v *Variant) Layout() []Type {
+	var layout []Type
+	for _, t := range v.Types() {
+		for i, lt := range t.Layout() {
+			if i >= len(layout) {
+				layout = append(layout, lt)
+			} else if layout[i] != lt {
+				return nil // Bail, there is no consistent memory layout for this variant
+			}
+		}
+	}
+	return append([]Type{Discriminant(len(v.Cases))}, layout...)
 }
 
 // Flat returns the [flattened] ABI representation of [Variant] v.
