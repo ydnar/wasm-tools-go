@@ -135,3 +135,24 @@ func BenchmarkResultInlines(b *testing.B) {
 	_ = ok
 	_ = err
 }
+
+func TestIssue95(t *testing.T) {
+	want := "hello"
+	res := issue95(false, want)
+	got := *res.OK()
+	if got != want {
+		t.Errorf("*res.OK(): %s, expected %s", got, want)
+	}
+}
+
+func issue95(isErr bool, v string) stringResult {
+	if isErr {
+		err := New[stringVariant](0, v)
+		return Err[stringResult](err)
+	}
+	return OK[stringResult](v)
+}
+
+type stringResult ErrResult[string, stringVariant]
+
+type stringVariant Variant[uint8, string, string]
